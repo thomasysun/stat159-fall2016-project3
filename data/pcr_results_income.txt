@@ -1,0 +1,11 @@
+PCR Model
+Principal component regression , fitted with the singular value decomposition algorithm.
+Cross-validated using 10 random segments.
+Call:
+pcr(formula = response ~ as.matrix(predictors), subset = train_set,     scale = FALSE, validation = "CV")
+
+Best Parameter
+[1] 18
+
+PCR Test MSE
+[1] 0.005352353

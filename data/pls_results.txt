@@ -1,0 +1,11 @@
+PLS Model
+Partial least squares regression , fitted with the kernel algorithm.
+Cross-validated using 10 random segments.
+Call:
+plsr(formula = response ~ as.matrix(predictors), subset = train_set,     scale = FALSE, validation = "CV")
+
+Best Parameter
+[1] 4
+
+PLS Test MSE
+[1] 0.2866455
