@@ -1,0 +1,53 @@
+##regression models
+library("glmnet")
+library('pls')
+#pre-modeling data processing
+clean_2012 = readRDS("data/clean_2012.rds")
+clean_2012_public = readRDS("data/clean_2012_public.rds")
+
+#delete na values
+clean_2012 = na.omit(clean_2012[,-14])
+
+#scale data
+clean_2012 = scale(as.matrix(clean_2012[,c(3:23)]), center = TRUE, scale = TRUE)
+
+#split into train and test
+set.seed(5)
+train_set = sample(c(1:1236), size = 866)
+predictors = clean_2012[,c(1:10,12:21)]
+response = clean_2012[,c(11)]
+test=(-train_set)
+response_test=response[test]
+
+
+## Partial Least Squares Regression
+library(pls)
+pls_fit = plsr(response~as.matrix(predictors), subset = train_set, scale = FALSE, validation ="CV")
+summary(pls_fit)
+best_para = which(pls_fit$validation$PRESS == min(pls_fit$validation$PRESS))
+validationplot(pls_fit, val.type="MSEP")
+# choose best model
+pls_pred = predict(pls_fit,as.matrix(predictors[-train_set,]),ncomp=4)
+pls_test_MSE = mean((pls_pred-response_test)^2)
+# PLS on full dataset
+pls = plsr(response~as.matrix(predictors), scale = FALSE, ncomp=4)
+summary(pls)
+pls_official_coefficients = as.numeric(pls$coefficients[,,4])
+save(pls_fit,
+     best_para,
+     pls_test_MSE,
+     file = "./data/pls_results.Rdata")
+sink(file ="./data/pls_results.txt")
+cat("PLS Model")
+cat("\n")
+pls_fit
+cat("\n")
+cat("Best Parameter")
+cat("\n")
+best_para
+cat("\n")
+cat("PLS Test MSE")
+cat("\n")
+pls_test_MSE
+sink()
+
