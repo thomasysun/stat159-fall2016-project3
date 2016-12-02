@@ -1,0 +1,17 @@
+---
+title: "Untitled"
+author: "Thomas Sun"
+date: "December 1, 2016"
+output: pdf_document
+---
+
+## Conclusions
+From the College Scorecard data, we wanted to learn what characteristics of an institution determine its value and performance in order to determine how to allocate grant money to the most effective institutions. Our exploratory data analysis showed that
+
+We fitted an OLS model upon the dataset so that we could get more insight about the information hidden behind the data. And the summary statistics served as our benchmark. Then, after some pre-model data processing, we looked to pick the best models according to test Mean Square Error, two shrinkage methods (ridge and lasso) and two dimension reduction methods (PCR and PLSR). We hoped that every additional method we used would lower the MSE. However, the test MSE from all 4 different methods were competitive with each other. The ridge regression method achieved the lowest test MSE and is thus considered the "best model" among the four methods. 
+
+Using the estimated coefficients from ridge regression, we find that strong predictors of credit balance include income, credit rating, credit limit, and student status. Meanwhile, number of cards, age, education, gender, marital status, and ethnicity are relatively weak predictors. Compared to the OLS coefficients, ridge regression appears to emphasize the effect of credit rating on balance more while emphasizing the effect of credit limit less. 
+
+Despite having a slightly higher MSE, lasso regression has the advantage of being the easiest of the models to interpret. It sets education, gender, marital status, and ethnicity coefficient to exactly zero, which is useful because it reduces the number of predictors to consider.
+
+The low MSE implies that our results may be useful for predictive purposes. The results suggest that increasing credit limit and rating will increase balance, while increasing income will lower credit balance. And, if the individual is a student, their balance is estimated to be lower.

@@ -1,0 +1,28 @@
+---
+title: "Untitled"
+author: "Thomas Sun"
+date: "December 1, 2016"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+A main concern for policymakers and families alike is the quality of higher education institutions. The demand in the labor market for workers with educational attainment beyond high school has been growing significantly, and those unable to attend college due to lack of income are being further separated from the best opportunities. In an effort to promote equity and level the playing field, the government has set up several programs, such as the Pell Grant, that help enable underserved populations to attend university. Therefore, to determine allocation of these resources, it is important to understand what factors separate effective universities from low value universities.
+
+To help families decide on the best school for their kids, the US Department of Education created a database of all US universities called College Scorecard. It contains highly detailed data various aspects on every university, such as graduation rates, composition of the student body, post-graduation income, etc. This dataset provides useful information that can be used to asses the performance of schools in order to allocate grant money. In order to discover if there exists a relationship between the predictors and balance, one can use a variety of models applied to the dataset. A common model used is ordinary least squares regression (OLS). OLS estimators have the advantage of being unbiased given that the relationship between response and predictors is truly linear. In the *Credit* dataset, a multiple linear regression model can be used to fit the data. 
+
+However, OLS may have high variance and include irrelevant variables. Alternative methods may be used to improve the prediction accuracy and model interpretability. We use ridge regression, lasso regression, principal components regression (PCR), and partial least squares regression (PLSR) on the *Credit* in an attempt to find the best fitting model for predictive modeling.
+
+Ridge regression and lasso regression, known as shrinkage methods, contrain the coefficient estimates and effectively shrinks them towards zero. Both tend to result in lower variance at the expense of more bias. Unlike ridge regression, lasso regression can have coefficient estimates equal to exactly zero, letting the resulting model only contain a subset of the predictors. Thus, lasso results are easier to interpret than results from ridge regression.
+
+PCR and PLSR are methods that transform the predictors and reduces the number of coefficients needed to be estimated by least squares, known as dimension reduction. PCR uses principal components to explain the variance in the predictors, resulting in a single variable to predict the response on behalf of multiple variables. PLSR is similar to PCR, except PLSR also attempts to find a linear combination that best predicts the response in addition to explaining the original predictors well. Using either PCR and PLSR can prevent overfitting, a potential problem that arises in OLS.
+
+In data with multiple dimensions, like in the *Credit* dataset, an OLS regression is prone to overfitting, especially when the regressors are highly collinear. We use ridge, lasso, principal component, and partial least squares regressions on *Credit* and try to pick the best model to fit the data. That is, find the model that is easy to interpret while having the best predictive capability.
+
+
+
+

@@ -1,0 +1,73 @@
+---
+title: "Untitled"
+author: "Thomas Sun"
+date: "December 1, 2016"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Methods
+
+#### Exploratory Data Analysis
+
+First, we perform an exploratory analysis on the College Scorecard dataset, We obtain summary statistics for average SAT score, completion rates and threshold earnings for Blacks and as well as other relevant plots.
+
+#### Data Processing
+
+Before fitting any of the models, we next conduct some data processing. The qualitative variables are categorical and thus need to be transformed into dummy variables, or binary indicators, to be used in the regression functions. We also mean center and standardize the data to remove different measurement scalings and be more comparable. So, each variable has a mean of zero and standard deviation of one.
+
+#### Model Building
+
+There are five regression models to be fitted to the dataset, ordinary least squares, ridge, lasso, principal components, and partial least squares. In data with multiple dimensions, like in the College Scorecard dataset, an OLS regression is prone to overfitting, especially when the regressors are highly collinear. We use the other four regressions on the dataset and try to pick the best model to fit the data. That is, find the model that is easy to interpret while having the best predictive capability.
+
+To build the models, we use a training dataset, containing a random sample of 75% of the total observations in the data. The remaining 25% of observations will be the test set, used to test the performance of the model. We then use ten-fold cross-validation to see how the predictive models would perform in practice. The training set is partitioned into ten equally sized subsamples. One fold is used as the testing set, while the other nine are used to fit the relevant model. This is then repeated for each fold so that all observations are tested exactly once. The cross validation is then used to tune a certain parameter, depending on the model, and then find the value of the parameter that results in the smallest cross validation error. This parameter is then selected as the "best" model, which is then fitted to the test set and finally the full dataset.
+
+#### Regression Models
+
+In order to find the relationship between graduation data and income, and the predictors to be used for predictive modelling, we assume the relationship between the independent and dependent variables is linear. The relationship is assumed to be the following:
+
+$$
+\begin{aligned}
+Y_i = \beta_0 + \beta_1X_1i + \beta_2X_2i + \ldots + \beta_{10}X_ni + \epsilon_i
+\end{aligned}
+$$
+
+Where $\beta_0$ is the intercept and $\beta_1$, ..., $\beta_{10}$ are the regression coefficients for their associated predictors $\X_1$, ..., $\X_n$, and $\epsilon$ is the error term. $\Y_i$ is the dependent variable, either graduation rate or income.
+
+We first use an ordinary least squares method to be used as a benchmark for comparison between the other models. OLS estimates the coefficients by minimizing the residual sum of squares (RSS), defined as
+
+$$
+\begin{aligned}
+RSS = \sum_{i=1}^{n} (y_i - \beta_0 - \sum_{j=1}^{p} \beta_jx_{ij})^2
+\end{aligned}
+$$
+
+For ridge regression, we minimize the RSS in addition to a shrinkage penalty, defined as
+
+$$
+\begin{aligned}
+RSS + \lambda \sum_{j=1}^{p} \beta_j^2
+\end{aligned}
+$$
+
+Where $\lambda$ is the tuning parameter. As $\lambda \rightarrow \infty$, the shrinkage penalty grows, effectively shrinking the coefficients $\beta_1$, ..., $\beta_{10}$ towards zero.
+
+Lasso regression is another shrinkage method like ridge regression. The quantity we want to minimize is defined as
+
+$$
+\begin{aligned}
+RSS + \lambda \sum_{j=1}^{p} |\beta_j|
+\end{aligned}
+$$
+
+This is similar to the quantity for ridge regression, except the penalty now contains $|\beta_j|$ instead of $\beta_j^2$. The tuning parameter $\lambda$ is the same, except now sufficiently large $\lambda$ may shrink coefficients to exactly zero. 
+
+
+For principal components regression, the method tries to reduce the dimensions $X_1$, ..., $X_{p}$ of the data matrix into principal components $Z_1$, ..., $Z_{M}$ and then using the components as the predictors for least squares regression. The $M$ principal compenents will be the tuning parameter, and we use cross validation find which $M$ produces the smallest mean squared error.
+
+Lastly, partial least squares, also a dimension reduction method, tries to find $Z_1$, ..., $Z_{M}$ that approximate the original dimensions like PCR, but also tries to find new features related to the response $Balance$. The tuning parameter, the number of $M$ directions, is the same as well. The $M$ that is associated with the smalled mean squared error will be selected for the model.
+
+Once all of the best models are identified, the test set will be used to compute the MSEs of each, and find which model performs best. The best model will finally be used on the full dataset to find official coefficients. The entire process is done twice, once for each outcome of interest.

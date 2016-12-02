@@ -1,0 +1,62 @@
+---
+title: "Untitled"
+author: "Thomas Sun"
+date: "December 1, 2016"
+output: pdf_document
+---
+
+## Analysis
+
+```{r, echo=FALSE}
+# load data and library
+options(warn = -1)
+library(xtable)
+library(png)
+library(grid)
+library(Matrix)
+library(methods)
+
+# load data in our working environment 
+load('../data/ols-regression.RData')
+load('../data/ridge-regression.RData')
+load('../data/lasso-regression.RData')
+load('../data/PCR.RData')
+load('../data/PLSR.RData')
+
+# load our functions
+source("../code/functions/mse-function.R")
+```
+
+#### Ordinary Least Squares method
+First, let's look at our benchmark - OLS regression. We use full set of data that is mean centering and standardizing to fit the OLS model. OLS model will be served as our benchmark for comparison with later four different methods. So we calculate OLS model's MSE, which is equal to `r I(osl_mse)` 
+\vspace{40mm}
+
+Here is more information about OLS regression:
+```{r, echo=FALSE, results='asis'}
+xtable_summary <- xtable(osl_summary, 
+                         caption = 'Summary Table of OLS Regression')
+print(xtable_summary, comment=FALSE, type = "latex", caption.placement = 'top')
+```
+
+Table 1 exhibits estimates of all coefficients and their corresponding t-test and p-value.
+
+From the above information, we can conclude that predictors such as *Income*, *Limit*, *Rating*, *Cards*, and *Student* are extremely significant.
+
+#### Other methods
+
+Next, we use the other regression methods to possibly find better fits to the data. We load mean centerized and standardized data before the analysis. For ridge and lasso regression, we first check mission value in data for both the train and test sets. We then initialize lambda and use random seeds for cross-validation. Next, we use the train set to conduct 10-fold cross-validation to find out the best tuning parameter.
+
+We find the $\lambda$ for the best model: best $\lambda = `r I(ridge_bestlam)`$. Then, we use the test set to compute the test Mean Square Error: test MSE = `r I(ridge_test_mse)`. Finally we refit the model on the full data set using the best lambda and get official coefficients.
+
+PCR and PLSR follow a similar process As before, we check the mission value in the data for both train and test sets and use random seeds for cross-validation. We then conduct 10-fold cross-validation on the test set to find out the best number of principal components used. 
+
+Once finding the number of principal components considered for the best model, we use the test set to compute the test Mean Square Error and finally refit the model on the full data set using M = `r I(pcr_bestncomp)`and get official coefficients.
+
+\begin{figure}[!hb]
+  \centering
+    \includegraphics[width=70mm]{../images/pcr-cv-ncomp.png}
+      \caption{the cross-validation errors in terms of the number of principal components used}
+\end{figure}
+
+Above is the plot of the cross-validation errors for each regression.
+\vspace{80mm}
