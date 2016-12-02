@@ -11,15 +11,18 @@ clean_2012 = na.omit(clean_2012[,-14])
 #scale data
 clean_2012 = scale(as.matrix(clean_2012[,c(3:23)]), center = TRUE, scale = TRUE)
 
-#split into train and test
-set.seed(5)
-train_set = sample(c(1:1236), size = 866)
-predictors = clean_2012[,c(1:10,12:21)]
-response = clean_2012[,c(11)]
-test=(-train_set)
-response_test=response[test]
-
-
 ##OLS
-ols = lm(response~as.matrix(predictors))
-ols_coeffs = as.numeric(ols$coefficients)[-1]
+ols_completion = lm(response~as.matrix(predictors))
+ols_completion_summary = summary(ols_completion)
+ols_completion_coeffs = as.numeric(ols_completion$coefficients)[-1]
+
+# Save results in binary file
+save(ols_completion, ols_completion_summary, ols_completion_coeffs,
+     file = "data/ols_results_completion.RData")
+
+# Save results to a text file
+sink("data/ols_results_completion.txt")
+cat("4-year completion results of multiple linear regression model via Ordinary Least Square", "\n")
+ols_completion_summary
+sink()
+
