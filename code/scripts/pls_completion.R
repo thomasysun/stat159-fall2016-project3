@@ -9,12 +9,12 @@ clean_2012_public = readRDS("data/clean_2012_public.rds")
 clean_2012 = na.omit(clean_2012[,-14])
 
 #scale data
-clean_2012 = scale(as.matrix(clean_2012[,c(3:23)]), center = TRUE, scale = TRUE)
+clean_2012 = scale(as.matrix(clean_2012[,c(3:21)]), center = TRUE, scale = TRUE)
 
 #split into train and test
 set.seed(5)
-train_set = sample(c(1:1236), size = 866)
-predictors = clean_2012[,c(1:10,12:21)]
+train_set = sample(c(1:1740), size = 1220)
+predictors = clean_2012[,c(1:10,12,16:19)]
 response = clean_2012[,c(11)]
 test=(-train_set)
 response_test=response[test]
@@ -27,12 +27,12 @@ summary(pls_fit)
 best_para = which(pls_fit$validation$PRESS == min(pls_fit$validation$PRESS))
 validationplot(pls_fit, val.type="MSEP")
 # choose best model
-pls_pred = predict(pls_fit,as.matrix(predictors[-train_set,]),ncomp=4)
+pls_pred = predict(pls_fit,as.matrix(predictors[-train_set,]),ncomp=2)
 pls_test_MSE = mean((pls_pred-response_test)^2)
 # PLS on full dataset
-pls = plsr(response~as.matrix(predictors), scale = FALSE, ncomp=4)
+pls = plsr(response~as.matrix(predictors), scale = FALSE, ncomp=2)
 summary(pls)
-pls_official_coefficients = as.numeric(pls$coefficients[,,4])
+pls_official_coefficients = as.numeric(pls$coefficients[,,2])
 save(pls_fit,
      best_para,
      pls_test_MSE,
