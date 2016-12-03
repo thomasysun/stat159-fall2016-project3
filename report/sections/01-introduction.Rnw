@@ -1,15 +1,9 @@
----
-title: "Untitled"
-author: "Thomas Sun"
-date: "December 1, 2016"
-output: pdf_document
----
+\documentclass{article}
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+\begin{document}
+\SweaveOpts{concordance=TRUE}
 
-## Introduction
+\section*{Introduction}
 
 A main concern for policymakers and families alike is the quality of higher education institutions. The demand in the labor market for workers with educational attainment beyond high school has been growing significantly, and those unable to attend college due to lack of income are being further separated from the best opportunities. In an effort to promote equity and level the playing field, the government has set up several programs, such as the Pell Grant, that help enable underserved populations to attend university. Therefore, to determine allocation of these resources, it is important to understand what factors separate effective universities from low value universities.
 
@@ -25,4 +19,4 @@ In data with multiple dimensions, like in the *Credit* dataset, an OLS regressio
 
 
 
-
+\end{document}

@@ -1,13 +1,11 @@
----
-title: "Untitled"
-author: "Thomas Sun"
-date: "December 1, 2016"
-output: pdf_document
----
+\documentclass{article}
 
-## Analysis
+\begin{document}
+\SweaveOpts{concordance=TRUE}
 
-```{r, echo=FALSE}
+\section*{Analysis}
+
+<<coefficients, results=tex, echo=FALSE>>=
 # load data and library
 options(warn = -1)
 library(xtable)
@@ -25,24 +23,24 @@ load('../data/PLSR.RData')
 
 # load our functions
 source("../code/functions/mse-function.R")
-```
+@
 
-#### Ordinary Least Squares method
+\subsection*{Ordinary Least Squares method}
 First, let's look at our benchmark - OLS regression. We use full set of data that is mean centering and standardizing to fit the OLS model. OLS model will be served as our benchmark for comparison with later four different methods. So we calculate OLS model's MSE, which is equal to `r I(osl_mse)` 
 \vspace{40mm}
 
 Here is more information about OLS regression:
-```{r, echo=FALSE, results='asis'}
+<<coefficients, results=tex, echo=FALSE>>=
 xtable_summary <- xtable(osl_summary, 
                          caption = 'Summary Table of OLS Regression')
 print(xtable_summary, comment=FALSE, type = "latex", caption.placement = 'top')
-```
+@
 
 Table 1 exhibits estimates of all coefficients and their corresponding t-test and p-value.
 
 From the above information, we can conclude that predictors such as *Income*, *Limit*, *Rating*, *Cards*, and *Student* are extremely significant.
 
-#### Other methods
+\subsection*{Other methods}
 
 Next, we use the other regression methods to possibly find better fits to the data. We load mean centerized and standardized data before the analysis. For ridge and lasso regression, we first check mission value in data for both the train and test sets. We then initialize lambda and use random seeds for cross-validation. Next, we use the train set to conduct 10-fold cross-validation to find out the best tuning parameter.
 
@@ -60,3 +58,6 @@ Once finding the number of principal components considered for the best model, w
 
 Above is the plot of the cross-validation errors for each regression.
 \vspace{80mm}
+
+
+\end{document}

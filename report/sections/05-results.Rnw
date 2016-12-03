@@ -1,13 +1,11 @@
----
-title: "Untitled"
-author: "Thomas Sun"
-date: "December 1, 2016"
-output: pdf_document
----
+\documentclass{article}
 
-## Results
+\begin{document}
+\SweaveOpts{concordance=TRUE}
 
-```{r, echo=FALSE}
+\section*{Results}
+
+<<coefficients, results=tex, echo=FALSE>>=
 # load data and library
 options(warn = -1)
 library(xtable)
@@ -25,10 +23,10 @@ load('../data/PLSR.RData')
 
 # load our functions
 source("../code/functions/mse-function.R")
-```
+@
 
 
-```{r, echo=FALSE}
+<<coefficients, results=tex, echo=FALSE>>=
 # Extract coefficients and convert them into vectors
 osl_coef_vector <- osl_coef[1:12]
 ridge_coef_vector <- unlist(ridge_coef)[1:12]
@@ -42,17 +40,17 @@ table_coef <- data.frame("OLS" = osl_coef_vector, "Ridge" = ridge_coef_vector,
                          "PLSR" = plsr_coef_vector)
 rownames(table_coef) <- rownames(ridge_coef)
 
-```
+@
 
 
 The following table contains the regression coefficients for all methods including: ols, ridge, lasso, pcr, and plsr. 
 
-```{r, echo=FALSE, results='asis'}
+<<coefficients, results=tex, echo=FALSE>>=
 # Use xtable to display our coefficients dataframe
 xtable_coef <- xtable(table_coef, caption = 'Regression Coefficients for All Methods',
                       digits = c(0, 3, 3, 3, 3, 3))
 print(xtable_coef, comment=FALSE, type = "latex", caption.placement = 'top')
-```
+@
 
 
 From Table 6, the result shows that regression coefficients for ridge, lasso, pcr, and plsr are approximately closed to each other's value but a slightly different comparing to ols - our benchmark. 
@@ -61,7 +59,7 @@ Not surprisingly, we have seen that some coefficients in lasso regression are ze
 
 Now let's look at another table with the test MSE values for the regression techniques: ridge, lasso, pcr, and plsr.
 
-```{r, echo=FALSE, results='asis'}
+<<coefficients, results=tex, echo=FALSE>>=
 # Create test mse dataframe
 table_mse <- data.frame("ridge" = ridge_test_mse, "lasso" = lasso_test_mse,
                         "PCR" = pcr_test_mse, "PLSR" = plsr_test_mse)
@@ -71,7 +69,7 @@ rownames(table_mse) <- "MSE Value"
 xtable_mse <- xtable(table_mse, caption = 'Test MSE for All Methods', 
                      digits = c(0, 3, 3, 3, 3))
 print(xtable_mse, comment=FALSE, type = "latex", caption.placement = 'top')
-```
+@
 
 Table 7 has only one row (Test MSE value) and four columns (one column per regression methods: ridge, lasso, pcr, and plsr).
 
@@ -79,7 +77,7 @@ From Table 7, the result shows that the model with lowest test Mean Square Error
 
 Now let's look at a plot in which the official coefficients are compared. We plot trend lines (i.e. the profiles) of the coefficients (one line connecting the coefficients of each method).
 
-```{r, echo=FALSE}
+<<coefficients, results=tex, echo=FALSE>>=
 # Create a new dataframe for coefficient in order to plot 
 plot_table_coef <- cbind(data.frame("Predictors" = rownames(table_coef)), table_coef)
 rownames(plot_table_coef) <- NULL
@@ -93,7 +91,10 @@ ggplot(plot_table_coef, aes(x = Predictors, y=value, group = Methods, colour = M
     geom_point(size = 4, shape = 21, fill = "white") +
     ggtitle("Figure 5: Official Coefficients Comparison") + theme_bw() + 
     theme(axis.text.x = element_text(angle = 45, hjust = 1))
-```
+@
 
 Figure 5 displays comparison of coefficients of each predictor between different methods that we discussed earlier. In this visualization, we again confirm that there is some level of similarity between all methods.
 
+
+
+\end{document}
