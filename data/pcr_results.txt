@@ -5,7 +5,7 @@ Call:
 pcr(formula = response ~ as.matrix(predictors), subset = train_set,     scale = FALSE, validation = "CV")
 
 Best Parameter
-[1] 18
+[1] 12
 
 PCR Test MSE
-[1] 0.283443
+[1] 0.4916237

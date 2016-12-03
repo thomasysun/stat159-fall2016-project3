@@ -5,7 +5,7 @@ Call:
 plsr(formula = response ~ as.matrix(predictors), subset = train_set,     scale = FALSE, validation = "CV")
 
 Best Parameter
-[1] 4
+[1] 2
 
 PLS Test MSE
-[1] 0.2866455
+[1] 0.4865275

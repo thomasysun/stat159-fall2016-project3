@@ -5,35 +5,30 @@ lm(formula = response ~ as.matrix(predictors))
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--3.7130 -0.3023  0.0167  0.3229  1.9918 
+-2.6525 -0.4847 -0.0309  0.4005  4.1749 
 
 Coefficients:
-                                         Estimate Std. Error t value Pr(>|t|)    
-(Intercept)                            -1.070e-14  1.484e-02   0.000  1.00000    
-as.matrix(predictors)Total              5.001e-02  1.900e-02   2.632  0.00859 ** 
-as.matrix(predictors)White              2.126e+01  3.739e+01   0.569  0.56975    
-as.matrix(predictors)Black              1.781e+01  3.121e+01   0.571  0.56841    
-as.matrix(predictors)Hispanic           9.833e+00  1.725e+01   0.570  0.56867    
-as.matrix(predictors)Asian              5.825e+00  1.021e+01   0.570  0.56857    
-as.matrix(predictors)Aian               1.657e+00  2.945e+00   0.563  0.57383    
-as.matrix(predictors)Pac.Islander       6.176e-01  1.142e+00   0.541  0.58884    
-as.matrix(predictors)Mixed              1.965e+00  3.464e+00   0.567  0.57054    
-as.matrix(predictors)NonResAlien        3.783e+00  6.713e+00   0.563  0.57321    
-as.matrix(predictors)Unknown            6.115e+00  1.076e+01   0.568  0.56983    
-as.matrix(predictors)CostAttendance     4.526e-01  2.224e-02  20.351  < 2e-16 ***
-as.matrix(predictors)Avg_SAT            3.253e-01  3.413e-02   9.531  < 2e-16 ***
-as.matrix(predictors)EarningsAgg        4.463e-01  2.336e-01   1.911  0.05630 .  
-as.matrix(predictors)EarningsINC1      -1.367e-01  8.063e-02  -1.695  0.09024 .  
-as.matrix(predictors)EarningsINC2      -2.426e-01  9.220e-02  -2.631  0.00862 ** 
-as.matrix(predictors)EarningsINC3      -1.166e-01  1.011e-01  -1.153  0.24909    
-as.matrix(predictors)LowIncome         -1.822e-01  3.708e-02  -4.915 1.01e-06 ***
-as.matrix(predictors)Mid1Income        -3.281e-02  1.943e-02  -1.689  0.09148 .  
-as.matrix(predictors)FirstGen          -9.269e-02  3.409e-02  -2.719  0.00663 ** 
-as.matrix(predictors)ThresholdEarnings  2.623e-02  3.114e-02   0.842  0.39979    
+                                    Estimate Std. Error t value Pr(>|t|)    
+(Intercept)                       -7.261e-15  1.699e-02   0.000   1.0000    
+as.matrix(predictors)Total        -7.385e-02  1.830e-02  -4.036 5.67e-05 ***
+as.matrix(predictors)White         2.983e+01  4.846e+01   0.616   0.5383    
+as.matrix(predictors)Black         2.312e+01  3.759e+01   0.615   0.5386    
+as.matrix(predictors)Hispanic      1.697e+01  2.752e+01   0.616   0.5377    
+as.matrix(predictors)Asian         6.730e+00  1.077e+01   0.625   0.5321    
+as.matrix(predictors)Aian          2.146e+00  3.561e+00   0.603   0.5469    
+as.matrix(predictors)Pac.Islander  1.949e+00  3.207e+00   0.608   0.5434    
+as.matrix(predictors)Mixed         2.434e+00  3.949e+00   0.616   0.5378    
+as.matrix(predictors)NonResAlien   4.753e+00  7.691e+00   0.618   0.5367    
+as.matrix(predictors)Unknown       1.276e+01  2.079e+01   0.614   0.5392    
+as.matrix(predictors)EarningsAgg   1.148e-01  2.313e-02   4.962 7.66e-07 ***
+as.matrix(predictors)LowIncome    -2.595e-01  3.925e-02  -6.611 5.09e-11 ***
+as.matrix(predictors)Mid1Income   -1.810e-01  1.931e-02  -9.375  < 2e-16 ***
+as.matrix(predictors)FirstGen     -3.143e-01  3.496e-02  -8.990  < 2e-16 ***
+as.matrix(predictors)FedLoans      4.191e-02  2.152e-02   1.947   0.0517 .  
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 â€˜***â€™ 0.001 â€˜**â€™ 0.01 â€˜*â€™ 0.05 â€˜.â€™ 0.1 â€˜ â€™ 1
 
-Residual standard error: 0.5219 on 1215 degrees of freedom
-Multiple R-squared:  0.7321,	Adjusted R-squared:  0.7276 
-F-statistic:   166 on 20 and 1215 DF,  p-value: < 2.2e-16
+Residual standard error: 0.7088 on 1724 degrees of freedom
+Multiple R-squared:  0.502,	Adjusted R-squared:  0.4976 
+F-statistic: 115.8 on 15 and 1724 DF,  p-value: < 2.2e-16
 
