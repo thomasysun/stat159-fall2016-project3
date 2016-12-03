@@ -1,6 +1,8 @@
 ##regression models
 library("glmnet")
 library('pls')
+#load mse function
+source("../functions/function_mse.R")
 #pre-modeling data processing
 clean_2012 = readRDS("data/clean_2012.rds")
 clean_2012_public = readRDS("data/clean_2012_public.rds")
@@ -21,14 +23,13 @@ response_test=response[test]
 
 
 ## Principal Components Regression
-library(pls)
 pcr_fit = pcr(response~as.matrix(predictors), subset = train_set, scale = FALSE, validation ="CV")
 summary(pcr_fit)
 best_para_1 = which(pcr_fit$validation$PRESS == min(pcr_fit$validation$PRESS))
 validationplot(pcr_fit, val.type="MSEP")
 # choose best model
 pcr_pred = predict(pcr_fit, as.matrix(predictors[-train_set,]),ncomp=14)
-pcr_test_MSE = mean((pcr_pred-response_test)^2)
+pcr_test_MSE = mse(pcr_pred, response_test)
 # PCR on full dataset
 pcr = pcr(response~as.matrix(predictors), scale = FALSE, ncomp=14)
 summary(pcr)

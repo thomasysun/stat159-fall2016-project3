@@ -1,6 +1,6 @@
 library(testthat)
 
-source("../functions/mse_function.R")
+source("../functions/function_mse.R")
 
 context("Test for MSE function")
 

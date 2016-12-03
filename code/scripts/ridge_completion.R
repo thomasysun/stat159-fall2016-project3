@@ -1,6 +1,8 @@
 ##regression models
 library("glmnet")
 library('pls')
+#load mse function
+source("../functions/function_mse.R")
 #pre-modeling data processing
 clean_2012 = readRDS("data/clean_2012.rds")
 clean_2012_public = readRDS("data/clean_2012_public.rds")
@@ -30,7 +32,7 @@ bestlam_1 = ridge_train$lambda.min
 
 # choose best model
 ridge_pred = predict(ridge_train,s=bestlam_1,newx=as.matrix(predictors[-train_set,]))
-ridge_test_MSE = mean((ridge_pred-response_test)^2)
+ridge_test_MSE = mse(ridge_pred, response_test)
 
 #ridge on full dataset
 ridge = glmnet(as.matrix(predictors),response, intercept = FALSE, 
@@ -41,8 +43,8 @@ ridge_official_coef = as.numeric(ridge_coef)[-1]
 save(ridge_train,
      bestlam_1,
      ridge_test_MSE,
-     file = "./data/ridge_results.Rdata")
-sink(file ="./data/ridge_results.txt")
+     file = "./data/ridge_results_completion.Rdata")
+sink(file ="./data/ridge_results_completion.txt")
 cat("Ridge Model")
 cat("\n")
 ridge_train

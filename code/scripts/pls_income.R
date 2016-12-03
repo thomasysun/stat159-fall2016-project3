@@ -1,6 +1,8 @@
 ##regression models
 library("glmnet")
 library('pls')
+#load mse function
+source("../functions/function_mse.R")
 #pre-modeling data processing
 clean_2012 = readRDS("data/clean_2012.rds")
 clean_2012_public = readRDS("data/clean_2012_public.rds")
@@ -21,14 +23,13 @@ response_test=response[test]
 
 
 ## Partial Least Squares Regression
-library(pls)
 pls_fit = plsr(response~as.matrix(predictors), subset = train_set, scale = FALSE, validation ="CV")
 summary(pls_fit)
 best_para = which(pls_fit$validation$PRESS == min(pls_fit$validation$PRESS))
 validationplot(pls_fit, val.type="MSEP")
 # choose best model
 pls_pred = predict(pls_fit,as.matrix(predictors[-train_set,]),ncomp=9)
-pls_test_MSE = mean((pls_pred-response_test)^2)
+pls_test_MSE = mse(pls_pred, response_test)
 # PLS on full dataset
 pls = plsr(response~as.matrix(predictors), scale = FALSE, ncomp=9)
 summary(pls)

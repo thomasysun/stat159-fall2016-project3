@@ -1,6 +1,8 @@
 ##regression models
 library("glmnet")
 library('pls')
+#load mse function
+source("../functions/function_mse.R")
 #pre-modeling data processing
 clean_2012 = readRDS("data/clean_2012.rds")
 clean_2012_public = readRDS("data/clean_2012_public.rds")
@@ -21,20 +23,32 @@ response_test=response[test]
 
 
 ##OLS
-ols = lm(response~as.matrix(predictors))
-ols_coeffs = as.numeric(ols$coefficients)[-1]
+ols_completion = lm(response~as.matrix(predictors))
+ols_completion_summary = summary(ols_completion)
+ols_completion_coeffs = as.numeric(ols_completion$coefficients)[-1]
+
+# Save results in binary file
+save(ols_completion, ols_completion_summary, ols_completion_coeffs,
+     file = "data/ols_results_completion.RData")
+
+# Save results to a text file
+sink("data/ols_results_completion.txt")
+cat("4-year completion results of multiple linear regression model via Ordinary Least Square", "\n")
+ols_completion_summary
+sink()
+
 
 ##Ridge regression
 grid = 10^seq(10, -2, length = 100)
 ridge_train = cv.glmnet(as.matrix(predictors[train_set, ]), response[train_set], intercept = FALSE, 
-                         standardize = FALSE, lambda = grid, alpha = 0)
+                        standardize = FALSE, lambda = grid, alpha = 0)
 plot(ridge_train)
 #lambda min
 bestlam_1 = ridge_train$lambda.min
 
 # choose best model
 ridge_pred = predict(ridge_train,s=bestlam_1,newx=as.matrix(predictors[-train_set,]))
-ridge_test_MSE = mean((ridge_pred-response_test)^2)
+ridge_test_MSE = mse(ridge_pred, response_test)
 
 #ridge on full dataset
 ridge = glmnet(as.matrix(predictors),response, intercept = FALSE, 
@@ -45,8 +59,8 @@ ridge_official_coef = as.numeric(ridge_coef)[-1]
 save(ridge_train,
      bestlam_1,
      ridge_test_MSE,
-     file = "./data/ridge_results.Rdata")
-sink(file ="./data/ridge_results.txt")
+     file = "./data/ridge_results_completion.Rdata")
+sink(file ="./data/ridge_results_completion.txt")
 cat("Ridge Model")
 cat("\n")
 ridge_train
@@ -60,6 +74,7 @@ cat("\n")
 ridge_test_MSE
 sink()
 
+
 ## Lasso Regression
 grid = 10^seq(10, -2, length = 100)
 lasso_train = cv.glmnet(as.matrix(predictors[train_set,]), response[train_set], intercept = FALSE, 
@@ -69,7 +84,7 @@ plot(lasso_train)
 bestlam_2 = lasso_train$lambda.min
 # choose best model
 lasso_pred = predict(lasso_train,s=bestlam_2 ,newx=as.matrix(predictors[-train_set,]))
-lasso_test_MSE = mean((lasso_pred-response_test)^2)
+lasso_test_MSE = mse(lasso_pred,response_test)
 # lasso on full dataset
 lasso = glmnet(as.matrix(predictors),response,lambda=grid, intercept = FALSE)
 lasso_coef = predict(lasso,type="coefficients",s=bestlam_2)
@@ -78,8 +93,8 @@ lasso_official_coef = as.numeric(lasso_coef)[-1]
 save(lasso_train,
      bestlam_2,
      lasso_test_MSE,
-     file = "./data/lasso_results.Rdata")
-sink(file ="./data/lasso_results.txt")
+     file = "./data/lasso_results_completion.Rdata")
+sink(file ="./data/lasso_results_completion.txt")
 cat("Lasso Model")
 cat("\n")
 lasso_train
@@ -101,7 +116,7 @@ best_para_1 = which(pcr_fit$validation$PRESS == min(pcr_fit$validation$PRESS))
 validationplot(pcr_fit, val.type="MSEP")
 # choose best model
 pcr_pred = predict(pcr_fit, as.matrix(predictors[-train_set,]),ncomp=12)
-pcr_test_MSE = mean((pcr_pred-response_test)^2)
+pcr_test_MSE = mse(pcr_pred, response_test)
 # PCR on full dataset
 pcr = pcr(response~as.matrix(predictors), scale = FALSE, ncomp=12)
 summary(pcr)
@@ -109,8 +124,8 @@ pcr_official_coefficients = as.numeric(pcr$coefficients[,,12])
 save(pcr_fit,
      best_para_1,
      pcr_test_MSE,
-     file = "./data/pcr_results.Rdata")
-sink(file ="./data/pcr_results.txt")
+     file = "./data/pcr_results_completion.Rdata")
+sink(file ="./data/pcr_results_completion.txt")
 cat("PCR Model")
 cat("\n")
 pcr_fit
@@ -124,15 +139,15 @@ cat("\n")
 pcr_test_MSE
 sink()
 
+
 ## Partial Least Squares Regression
-library(pls)
 pls_fit = plsr(response~as.matrix(predictors), subset = train_set, scale = FALSE, validation ="CV")
 summary(pls_fit)
 best_para = which(pls_fit$validation$PRESS == min(pls_fit$validation$PRESS))
 validationplot(pls_fit, val.type="MSEP")
 # choose best model
 pls_pred = predict(pls_fit,as.matrix(predictors[-train_set,]),ncomp=2)
-pls_test_MSE = mean((pls_pred-response_test)^2)
+pls_test_MSE = mse(pls_pred, response_test)
 # PLS on full dataset
 pls = plsr(response~as.matrix(predictors), scale = FALSE, ncomp=2)
 summary(pls)
@@ -140,8 +155,8 @@ pls_official_coefficients = as.numeric(pls$coefficients[,,2])
 save(pls_fit,
      best_para,
      pls_test_MSE,
-     file = "./data/pls_results.Rdata")
-sink(file ="./data/pls_results.txt")
+     file = "./data/pls_results_completion.Rdata")
+sink(file ="./data/pls_results_completion.txt")
 cat("PLS Model")
 cat("\n")
 pls_fit

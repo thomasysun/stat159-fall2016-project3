@@ -1,6 +1,8 @@
 ##regression models
 library("glmnet")
 library('pls')
+#load mse function
+source("../functions/function_mse.R")
 #pre-modeling data processing
 clean_2012 = readRDS("data/clean_2012.rds")
 clean_2012_public = readRDS("data/clean_2012_public.rds")
@@ -29,7 +31,7 @@ plot(lasso_train)
 bestlam_2 = lasso_train$lambda.min
 # choose best model
 lasso_pred = predict(lasso_train,s=bestlam_2 ,newx=as.matrix(predictors[-train_set,]))
-lasso_test_MSE = mean((lasso_pred-response_test)^2)
+lasso_test_MSE = mse(lasso_pred, response_test)
 # lasso on full dataset
 lasso = glmnet(as.matrix(predictors),response,lambda=grid, intercept = FALSE)
 lasso_coef = predict(lasso,type="coefficients",s=bestlam_2)
