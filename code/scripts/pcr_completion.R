@@ -23,31 +23,36 @@ response_test=response[test]
 
 
 ## Principal Components Regression
-pcr_fit = pcr(response~as.matrix(predictors), subset = train_set, scale = FALSE, validation ="CV")
-summary(pcr_fit)
-best_para_1 = which(pcr_fit$validation$PRESS == min(pcr_fit$validation$PRESS))
-validationplot(pcr_fit, val.type="MSEP")
+pcr_fit_c = pcr(response~predictors, subset = train_set, scale = FALSE, validation ="CV")
+pcr_bestpara_c = which(pcr_fit_c$validation$PRESS == min(pcr_fit_c$validation$PRESS))
+validationplot(pcr_fit_c, val.type="MSEP")
 # choose best model
-pcr_pred = predict(pcr_fit, as.matrix(predictors[-train_set,]),ncomp=12)
-pcr_test_MSE = mse(pcr_pred, response_test)
+set.seed(5)
+pcr_pred = predict(pcr_fit_c, predictors[-train_set,],ncomp=pcr_bestpara_c)
+pcr_test_MSE_c = mse(pcr_pred, response_test)
 # PCR on full dataset
-pcr = pcr(response~as.matrix(predictors), scale = FALSE, ncomp=12)
-summary(pcr)
-pcr_official_coefficients = as.numeric(pcr$coefficients[,,12])
-save(pcr_fit,
-     best_para_1,
-     pcr_test_MSE,
+pcr = pcr(response~predictors, scale = FALSE, ncomp=pcr_bestpara_c)
+pcr_coef_c = coef(pcr)
+
+save(pcr_fit_c,
+     pcr_bestpara_c,
+     pcr_test_MSE_c,
+     pcr_coef_c,
      file = "./data/pcr_results_completion.Rdata")
 sink(file ="./data/pcr_results_completion.txt")
 cat("PCR Model")
 cat("\n")
-pcr_fit
+pcr_fit_c
 cat("\n")
 cat("Best Parameter")
 cat("\n")
-best_para_1
+pcr_bestpara_c
 cat("\n")
 cat("PCR Test MSE")
 cat("\n")
-pcr_test_MSE
+pcr_test_MSE_c
+cat("\n")
+cat("PCR Official Coefficients for Completion Rates")
+cat("\n")
+pcr_coef_c
 sink()

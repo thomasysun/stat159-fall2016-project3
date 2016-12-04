@@ -24,22 +24,21 @@ response_test=response[test]
 
 ## Lasso Regression
 grid = 10^seq(10, -2, length = 100)
-lasso_train = cv.glmnet(as.matrix(predictors[train_set,]), response[train_set], intercept = FALSE, 
+lasso_train_c = cv.glmnet(as.matrix(predictors[train_set,]), response[train_set], intercept = FALSE, 
                         lambda = grid, standardize = FALSE)
 
-plot(lasso_train)
-bestlam_2 = lasso_train$lambda.min
+plot(lasso_train_c)
+lasso_bestlam_c = lasso_train_c$lambda.min
 # choose best model
-lasso_pred = predict(lasso_train,s=bestlam_2 ,newx=as.matrix(predictors[-train_set,]))
-lasso_test_MSE = mse(lasso_pred,response_test)
+lasso_pred = predict(lasso_train_c,s=lasso_bestlam_c ,newx=as.matrix(predictors[-train_set,]))
+lasso_test_MSE_c = mse(lasso_pred,response_test)
 # lasso on full dataset
-lasso = glmnet(as.matrix(predictors),response,lambda=grid, intercept = FALSE)
-lasso_coef = predict(lasso,type="coefficients",s=bestlam_2)
-lasso_coef[lasso_coef!=0]
-lasso_official_coef = as.numeric(lasso_coef)[-1]
-save(lasso_train,
-     bestlam_2,
+lasso = glmnet(predictors,response,lambda=grid, intercept = FALSE)
+lasso_coef_c = predict(lasso,type="coefficients",s=lasso_bestlam_c)
+save(lasso_train_c,
+     lasso_bestlam_c,
      lasso_test_MSE,
+     lasso_coef_c,
      file = "./data/lasso_results_completion.Rdata")
 sink(file ="./data/lasso_results_completion.txt")
 cat("Lasso Model")
@@ -53,4 +52,8 @@ cat("\n")
 cat("Lasso Test MSE")
 cat("\n")
 lasso_test_MSE
+cat("\n")
+cat("Lasso Official Coefficients for Completion Rates")
+cat("\n")
+lasso_coef_c
 sink()

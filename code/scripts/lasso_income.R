@@ -24,33 +24,37 @@ response_test=response[test]
 
 ## Lasso Regression
 grid = 10^seq(10, -2, length = 100)
-lasso_train = cv.glmnet(as.matrix(predictors[train_set,]), response[train_set], intercept = FALSE, 
+lasso_train_i = cv.glmnet(as.matrix(predictors[train_set,]), response[train_set], intercept = FALSE, 
                         lambda = grid, standardize = FALSE)
 
-plot(lasso_train)
-bestlam_2 = lasso_train$lambda.min
+plot(lasso_train_i)
+lasso_bestlam_i = lasso_train_i$lambda.min
 # choose best model
-lasso_pred = predict(lasso_train,s=bestlam_2 ,newx=as.matrix(predictors[-train_set,]))
-lasso_test_MSE = mse(lasso_pred, response_test)
+lasso_pred = predict(lasso_train_i,s=lasso_bestlam_i ,newx=as.matrix(predictors[-train_set,]))
+lasso_test_MSE_i = mse(lasso_pred, response_test)
 # lasso on full dataset
-lasso = glmnet(as.matrix(predictors),response,lambda=grid, intercept = FALSE)
-lasso_coef = predict(lasso,type="coefficients",s=bestlam_2)
-lasso_coef[lasso_coef!=0]
-lasso_official_coef = as.numeric(lasso_coef)[-1]
-save(lasso_train,
-     bestlam_2,
-     lasso_test_MSE,
+lasso = glmnet(predictors,response,lambda=grid, intercept = FALSE)
+lasso_coef_i = predict(lasso,type="coefficients",s=lasso_bestlam_i)
+
+save(lasso_train_i,
+     lasso_bestlam_i,
+     lasso_test_MSE_i,
+     lasso_coef_i,
      file = "./data/lasso_results_income.Rdata")
 sink(file ="./data/lasso_results_income.txt")
 cat("Lasso Model")
 cat("\n")
-lasso_train
+lasso_train_i
 cat("\n")
 cat("Best Lambda")
 cat("\n")
-bestlam_2
+lasso_bestlam_i
 cat("\n")
 cat("Lasso Test MSE")
 cat("\n")
-lasso_test_MSE
+lasso_test_MSE_i
+cat("\n")
+cat("Lasso Official Coefficients for Income")
+cat("\n")
+lasso_coef_i
 sink()

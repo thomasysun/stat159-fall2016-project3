@@ -24,25 +24,25 @@ response_test=response[test]
 
 ##Ridge regression
 grid = 10^seq(10, -2, length = 100)
-ridge_train = cv.glmnet(as.matrix(predictors[train_set, ]), response[train_set], intercept = FALSE, 
+ridge_train_i = cv.glmnet(as.matrix(predictors[train_set, ]), response[train_set], intercept = FALSE, 
                         standardize = FALSE, lambda = grid, alpha = 0)
-plot(ridge_train)
+plot(ridge_train_i)
 #lambda min
-bestlam_1 = ridge_train$lambda.min
+ridge_bestlam_i = ridge_train_i$lambda.min
 
 # choose best model
-ridge_pred = predict(ridge_train,s=bestlam_1,newx=as.matrix(predictors[-train_set,]))
-ridge_test_MSE = mse(ridge_pred, response_test)
+ridge_pred = predict(ridge_train_i,s=ridge_bestlam_i,newx=as.matrix(predictors[-train_set,]))
+ridge_test_MSE_i = mse(ridge_pred, response_test)
 
 #ridge on full dataset
-ridge = glmnet(as.matrix(predictors),response, intercept = FALSE, 
+ridge = glmnet(predictors,response, intercept = FALSE, 
                standardize = FALSE, lambda = grid, alpha = 0)
-ridge_coef = predict(ridge,type="coefficients",s=bestlam_1)
-ridge_official_coef = as.numeric(ridge_coef)[-1]
+ridge_coef_i = predict(ridge,type="coefficients",s=bestlam_1)
 
-save(ridge_train,
-     bestlam_1,
-     ridge_test_MSE,
+save(ridge_train_i,
+     ridge_bestlam_1_i,
+     ridge_test_MSE_i,
+     ridge_coef_i,
      file = "./data/ridge_results_income.Rdata")
 sink(file ="./data/ridge_results_income.txt")
 cat("Ridge Model")
@@ -56,4 +56,8 @@ cat("\n")
 cat("Ridge Test MSE")
 cat("\n")
 ridge_test_MSE
+cat("\n")
+cat("Ridge Official Coefficients for Income")
+cat("\n")
+ridge_coef_i
 sink()

@@ -39,25 +39,25 @@ sink()
 
 ##Ridge regression
 grid = 10^seq(10, -2, length = 100)
-ridge_train = cv.glmnet(as.matrix(predictors[train_set, ]), response[train_set], intercept = FALSE, 
-                        standardize = FALSE, lambda = grid, alpha = 0)
-plot(ridge_train)
+ridge_train_i = cv.glmnet(as.matrix(predictors[train_set, ]), response[train_set], intercept = FALSE, 
+                          standardize = FALSE, lambda = grid, alpha = 0)
+plot(ridge_train_i)
 #lambda min
-bestlam_1 = ridge_train$lambda.min
+ridge_bestlam_i = ridge_train_i$lambda.min
 
 # choose best model
-ridge_pred = predict(ridge_train,s=bestlam_1,newx=as.matrix(predictors[-train_set,]))
-ridge_test_MSE = mse(ridge_pred, response_test)
+ridge_pred = predict(ridge_train_i,s=ridge_bestlam_i,newx=as.matrix(predictors[-train_set,]))
+ridge_test_MSE_i = mse(ridge_pred, response_test)
 
 #ridge on full dataset
-ridge = glmnet(as.matrix(predictors),response, intercept = FALSE, 
+ridge = glmnet(predictors,response, intercept = FALSE, 
                standardize = FALSE, lambda = grid, alpha = 0)
-ridge_coef = predict(ridge,type="coefficients",s=bestlam_1)
-ridge_official_coef = as.numeric(ridge_coef)[-1]
+ridge_coef_i = predict(ridge,type="coefficients",s=bestlam_1)
 
-save(ridge_train,
-     bestlam_1,
-     ridge_test_MSE,
+save(ridge_train_i,
+     ridge_bestlam_1_i,
+     ridge_test_MSE_i,
+     ridge_coef_i,
      file = "./data/ridge_results_income.Rdata")
 sink(file ="./data/ridge_results_income.txt")
 cat("Ridge Model")
@@ -71,100 +71,119 @@ cat("\n")
 cat("Ridge Test MSE")
 cat("\n")
 ridge_test_MSE
+cat("\n")
+cat("Ridge Official Coefficients for Income")
+cat("\n")
+ridge_coef_i
 sink()
+
 
 ## Lasso Regression
 grid = 10^seq(10, -2, length = 100)
-lasso_train = cv.glmnet(as.matrix(predictors[train_set,]), response[train_set], intercept = FALSE, 
-                        lambda = grid, standardize = FALSE)
+lasso_train_i = cv.glmnet(as.matrix(predictors[train_set,]), response[train_set], intercept = FALSE, 
+                          lambda = grid, standardize = FALSE)
 
-plot(lasso_train)
-bestlam_2 = lasso_train$lambda.min
+plot(lasso_train_i)
+lasso_bestlam_i = lasso_train_i$lambda.min
 # choose best model
-lasso_pred = predict(lasso_train,s=bestlam_2 ,newx=as.matrix(predictors[-train_set,]))
-lasso_test_MSE = mse(lasso_pred, response_test)
+lasso_pred = predict(lasso_train_i,s=lasso_bestlam_i ,newx=as.matrix(predictors[-train_set,]))
+lasso_test_MSE_i = mse(lasso_pred, response_test)
 # lasso on full dataset
-lasso = glmnet(as.matrix(predictors),response,lambda=grid, intercept = FALSE)
-lasso_coef = predict(lasso,type="coefficients",s=bestlam_2)
-lasso_coef[lasso_coef!=0]
-lasso_official_coef = as.numeric(lasso_coef)[-1]
-save(lasso_train,
-     bestlam_2,
-     lasso_test_MSE,
+lasso = glmnet(predictors,response,lambda=grid, intercept = FALSE)
+lasso_coef_i = predict(lasso,type="coefficients",s=lasso_bestlam_i)
+
+save(lasso_train_i,
+     lasso_bestlam_i,
+     lasso_test_MSE_i,
+     lasso_coef_i,
      file = "./data/lasso_results_income.Rdata")
 sink(file ="./data/lasso_results_income.txt")
 cat("Lasso Model")
 cat("\n")
-lasso_train
+lasso_train_i
 cat("\n")
 cat("Best Lambda")
 cat("\n")
-bestlam_2
+lasso_bestlam_i
 cat("\n")
 cat("Lasso Test MSE")
 cat("\n")
-lasso_test_MSE
+lasso_test_MSE_i
+cat("\n")
+cat("Lasso Official Coefficients for Income")
+cat("\n")
+lasso_coef_i
 sink()
 
 
 ## Principal Components Regression
-pcr_fit = pcr(response~as.matrix(predictors), subset = train_set, scale = FALSE, validation ="CV")
-summary(pcr_fit)
-best_para_1 = which(pcr_fit$validation$PRESS == min(pcr_fit$validation$PRESS))
-validationplot(pcr_fit, val.type="MSEP")
+pcr_fit_i = pcr(response~predictors, subset = train_set, scale = FALSE, validation ="CV")
+pcr_bestpara_i = which(pcr_fit_i$validation$PRESS == min(pcr_fit_i$validation$PRESS))
+validationplot(pcr_fit_i, val.type="MSEP")
 # choose best model
-pcr_pred = predict(pcr_fit, as.matrix(predictors[-train_set,]),ncomp=14)
-pcr_test_MSE = mse(pcr_pred, response_test)
+set.seed(5)
+pcr_pred = predict(pcr_fit_i, predictors[-train_set,],ncomp=pcr_bestpara_i)
+pcr_test_MSE_i = mse(pcr_pred, response_test)
 # PCR on full dataset
-pcr = pcr(response~as.matrix(predictors), scale = FALSE, ncomp=14)
-summary(pcr)
-pcr_official_coefficients = as.numeric(pcr$coefficients[,,14])
-save(pcr_fit,
-     best_para_1,
-     pcr_test_MSE,
+pcr = pcr(response~predictors, scale = FALSE, ncomp=pcr_bestpara_i)
+pcr_coef_i = coef(pcr)
+
+save(pcr_fit_i,
+     pcr_bestpara_i,
+     pcr_test_MSE_i,
+     pcr_coef_i,
      file = "./data/pcr_results_income.Rdata")
 sink(file ="./data/pcr_results_income.txt")
 cat("PCR Model")
 cat("\n")
-pcr_fit
+pcr_fit_i
 cat("\n")
 cat("Best Parameter")
 cat("\n")
-best_para_1
+pcr_bestpara_i
 cat("\n")
 cat("PCR Test MSE")
 cat("\n")
-pcr_test_MSE
+pcr_test_MSE_i
+cat("\n")
+cat("PCR Official Coefficients for Income")
+cat("\n")
+pcr_coef_i
 sink()
 
 ## Partial Least Squares Regression
-pls_fit = plsr(response~as.matrix(predictors), subset = train_set, scale = FALSE, validation ="CV")
-summary(pls_fit)
-best_para = which(pls_fit$validation$PRESS == min(pls_fit$validation$PRESS))
-validationplot(pls_fit, val.type="MSEP")
+pls_fit_i = plsr(response~predictors, subset = train_set, scale = FALSE, validation ="CV")
+pls_bestpara_i = which(pls_fit_i$validation$PRESS == min(pls_fit_i$validation$PRESS))
+validationplot(pls_fit_i, val.type="MSEP")
 # choose best model
-pls_pred = predict(pls_fit,as.matrix(predictors[-train_set,]),ncomp=9)
-pls_test_MSE = mse(pls_pred, response_test)
+set.seed(5)
+pls_pred = predict(pls_fit_i,predictors[-train_set,],ncomp=pls_bestpara_i)
+pls_test_MSE_i = mse(pls_pred, response_test)
 # PLS on full dataset
-pls = plsr(response~as.matrix(predictors), scale = FALSE, ncomp=9)
-summary(pls)
-pls_official_coefficients = as.numeric(pls$coefficients[,,9])
-save(pls_fit,
-     best_para,
-     pls_test_MSE,
+pls = plsr(response~predictors, scale = FALSE, ncomp=pls_bestpara_i)
+pls_coef_i = coef(pls)
+
+save(pls_fit_i,
+     pls_bestpara_i,
+     pls_test_MSE_i,
+     pls_coef_i,
      file = "./data/pls_results_income.Rdata")
 sink(file ="./data/pls_results_income.txt")
 cat("PLS Model")
 cat("\n")
-pls_fit
+pls_fit_i
 cat("\n")
 cat("Best Parameter")
 cat("\n")
-best_para
+pls_bestpara_i
 cat("\n")
 cat("PLS Test MSE")
 cat("\n")
-pls_test_MSE
+pls_test_MSE_i
+cat("\n")
+cat("PLS Official Coefficients for Income")
+cat("\n")
+pls_coef_i
 sink()
 
 

@@ -23,32 +23,37 @@ response_test=response[test]
 
 
 ## Partial Least Squares Regression
-pls_fit = plsr(response~as.matrix(predictors), subset = train_set, scale = FALSE, validation ="CV")
-summary(pls_fit)
-best_para = which(pls_fit$validation$PRESS == min(pls_fit$validation$PRESS))
-validationplot(pls_fit, val.type="MSEP")
+pls_fit_c = plsr(response~predictors, subset = train_set, scale = FALSE, validation ="CV")
+pls_bestpara_c = which(pls_fit_c$validation$PRESS == min(pls_fit_c$validation$PRESS))
+validationplot(pls_fit_c, val.type="MSEP")
 # choose best model
-pls_pred = predict(pls_fit,as.matrix(predictors[-train_set,]),ncomp=2)
-pls_test_MSE = mse(pls_pred, response_test)
+set.seed(5)
+pls_pred = predict(pls_fit_c,predictors[-train_set,],ncomp=pls_bestpara_c)
+pls_test_MSE_c = mse(pls_pred, response_test)
 # PLS on full dataset
-pls = plsr(response~as.matrix(predictors), scale = FALSE, ncomp=2)
-summary(pls)
-pls_official_coefficients = as.numeric(pls$coefficients[,,2])
-save(pls_fit,
-     best_para,
-     pls_test_MSE,
-     file = "./data/pls_results.Rdata")
-sink(file ="./data/pls_results.txt")
+pls = plsr(response~predictors, scale = FALSE, ncomp=pls_bestpara_c)
+pls_coef_c = coef(pls)
+
+save(pls_fit_c,
+     pls_bestpara_c,
+     pls_test_MSE_c,
+     pls_coef_c,
+     file = "./data/pls_results_completion.Rdata")
+sink(file ="./data/pls_results_completion.txt")
 cat("PLS Model")
 cat("\n")
-pls_fit
+pls_fit_c
 cat("\n")
 cat("Best Parameter")
 cat("\n")
-best_para
+pls_bestpara_c
 cat("\n")
 cat("PLS Test MSE")
 cat("\n")
-pls_test_MSE
+pls_test_MSE_c
+cat("\n")
+cat("PLS Official Coefficients for Completion Rates")
+cat("\n")
+pls_coef_c
 sink()
 

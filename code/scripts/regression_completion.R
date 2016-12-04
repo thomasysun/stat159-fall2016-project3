@@ -40,59 +40,61 @@ sink()
 
 ##Ridge regression
 grid = 10^seq(10, -2, length = 100)
-ridge_train = cv.glmnet(as.matrix(predictors[train_set, ]), response[train_set], intercept = FALSE, 
-                        standardize = FALSE, lambda = grid, alpha = 0)
-plot(ridge_train)
+ridge_train_c = cv.glmnet(as.matrix(predictors[train_set, ]), response[train_set], intercept = FALSE, 
+                          standardize = FALSE, lambda = grid, alpha = 0)
+plot(ridge_train_c)
 #lambda min
-bestlam_1 = ridge_train$lambda.min
+ridge_bestlam_c = ridge_train$lambda.min
 
 # choose best model
-ridge_pred = predict(ridge_train,s=bestlam_1,newx=as.matrix(predictors[-train_set,]))
-ridge_test_MSE = mse(ridge_pred, response_test)
+ridge_pred = predict(ridge_train_c,s=ridge_bestlam_c,newx=as.matrix(predictors[-train_set,]))
+ridge_test_MSE_c = mse(ridge_pred, response_test)
 
 #ridge on full dataset
-ridge = glmnet(as.matrix(predictors),response, intercept = FALSE, 
+ridge = glmnet(predictors,response, intercept = FALSE, 
                standardize = FALSE, lambda = grid, alpha = 0)
-ridge_coef = predict(ridge,type="coefficients",s=bestlam_1)
-ridge_official_coef = as.numeric(ridge_coef)[-1]
+ridge_coef_c = predict(ridge,type="coefficients",s=ridge_bestlam_c)
 
-save(ridge_train,
-     bestlam_1,
-     ridge_test_MSE,
+save(ridge_train_c,
+     ridge_bestlam_c,
+     ridge_test_MSE_c,
+     ridge_coef_c,
      file = "./data/ridge_results_completion.Rdata")
 sink(file ="./data/ridge_results_completion.txt")
 cat("Ridge Model")
 cat("\n")
-ridge_train
+ridge_train_c
 cat("\n")
 cat("Best Lambda")
 cat("\n")
-bestlam_1
+ridge_bestlam_c
 cat("\n")
 cat("Ridge Test MSE")
 cat("\n")
-ridge_test_MSE
+ridge_test_MSE_c
+cat("\n")
+cat("Ridge Official Coefficients for Completion Rates")
+cat("\n")
+ridge_coef_c
 sink()
-
 
 ## Lasso Regression
 grid = 10^seq(10, -2, length = 100)
-lasso_train = cv.glmnet(as.matrix(predictors[train_set,]), response[train_set], intercept = FALSE, 
-                        lambda = grid, standardize = FALSE)
+lasso_train_c = cv.glmnet(as.matrix(predictors[train_set,]), response[train_set], intercept = FALSE, 
+                          lambda = grid, standardize = FALSE)
 
-plot(lasso_train)
-bestlam_2 = lasso_train$lambda.min
+plot(lasso_train_c)
+lasso_bestlam_c = lasso_train_c$lambda.min
 # choose best model
-lasso_pred = predict(lasso_train,s=bestlam_2 ,newx=as.matrix(predictors[-train_set,]))
-lasso_test_MSE = mse(lasso_pred,response_test)
+lasso_pred = predict(lasso_train_c,s=lasso_bestlam_c ,newx=as.matrix(predictors[-train_set,]))
+lasso_test_MSE_c = mse(lasso_pred,response_test)
 # lasso on full dataset
-lasso = glmnet(as.matrix(predictors),response,lambda=grid, intercept = FALSE)
-lasso_coef = predict(lasso,type="coefficients",s=bestlam_2)
-lasso_coef[lasso_coef!=0]
-lasso_official_coef = as.numeric(lasso_coef)[-1]
-save(lasso_train,
-     bestlam_2,
+lasso = glmnet(predictors,response,lambda=grid, intercept = FALSE)
+lasso_coef_c = predict(lasso,type="coefficients",s=lasso_bestlam_c)
+save(lasso_train_c,
+     lasso_bestlam_c,
      lasso_test_MSE,
+     lasso_coef_c,
      file = "./data/lasso_results_completion.Rdata")
 sink(file ="./data/lasso_results_completion.txt")
 cat("Lasso Model")
@@ -106,67 +108,79 @@ cat("\n")
 cat("Lasso Test MSE")
 cat("\n")
 lasso_test_MSE
+cat("\n")
+cat("Lasso Official Coefficients for Completion Rates")
+cat("\n")
+lasso_coef_c
 sink()
 
 ## Principal Components Regression
-library(pls)
-pcr_fit = pcr(response~as.matrix(predictors), subset = train_set, scale = FALSE, validation ="CV")
-summary(pcr_fit)
-best_para_1 = which(pcr_fit$validation$PRESS == min(pcr_fit$validation$PRESS))
-validationplot(pcr_fit, val.type="MSEP")
+pcr_fit_c = pcr(response~predictors, subset = train_set, scale = FALSE, validation ="CV")
+pcr_bestpara_c = which(pcr_fit_c$validation$PRESS == min(pcr_fit_c$validation$PRESS))
+validationplot(pcr_fit_c, val.type="MSEP")
 # choose best model
-pcr_pred = predict(pcr_fit, as.matrix(predictors[-train_set,]),ncomp=12)
-pcr_test_MSE = mse(pcr_pred, response_test)
+set.seed(5)
+pcr_pred = predict(pcr_fit_c, predictors[-train_set,],ncomp=pcr_bestpara_c)
+pcr_test_MSE_c = mse(pcr_pred, response_test)
 # PCR on full dataset
-pcr = pcr(response~as.matrix(predictors), scale = FALSE, ncomp=12)
-summary(pcr)
-pcr_official_coefficients = as.numeric(pcr$coefficients[,,12])
-save(pcr_fit,
-     best_para_1,
-     pcr_test_MSE,
+pcr = pcr(response~predictors, scale = FALSE, ncomp=pcr_bestpara_c)
+pcr_coef_c = coef(pcr)
+
+save(pcr_fit_c,
+     pcr_bestpara_c,
+     pcr_test_MSE_c,
+     pcr_coef_c,
      file = "./data/pcr_results_completion.Rdata")
 sink(file ="./data/pcr_results_completion.txt")
 cat("PCR Model")
 cat("\n")
-pcr_fit
+pcr_fit_c
 cat("\n")
 cat("Best Parameter")
 cat("\n")
-best_para_1
+pcr_bestpara_c
 cat("\n")
 cat("PCR Test MSE")
 cat("\n")
-pcr_test_MSE
+pcr_test_MSE_c
+cat("\n")
+cat("PCR Official Coefficients for Completion Rates")
+cat("\n")
+pcr_coef_c
 sink()
 
 
 ## Partial Least Squares Regression
-pls_fit = plsr(response~as.matrix(predictors), subset = train_set, scale = FALSE, validation ="CV")
-summary(pls_fit)
-best_para = which(pls_fit$validation$PRESS == min(pls_fit$validation$PRESS))
-validationplot(pls_fit, val.type="MSEP")
+pls_fit_c = plsr(response~predictors, subset = train_set, scale = FALSE, validation ="CV")
+pls_bestpara_c = which(pls_fit_c$validation$PRESS == min(pls_fit_c$validation$PRESS))
+validationplot(pls_fit_c, val.type="MSEP")
 # choose best model
-pls_pred = predict(pls_fit,as.matrix(predictors[-train_set,]),ncomp=2)
-pls_test_MSE = mse(pls_pred, response_test)
+set.seed(5)
+pls_pred = predict(pls_fit_c,predictors[-train_set,],ncomp=pls_bestpara_c)
+pls_test_MSE_c = mse(pls_pred, response_test)
 # PLS on full dataset
-pls = plsr(response~as.matrix(predictors), scale = FALSE, ncomp=2)
-summary(pls)
-pls_official_coefficients = as.numeric(pls$coefficients[,,2])
-save(pls_fit,
-     best_para,
-     pls_test_MSE,
+pls = plsr(response~predictors, scale = FALSE, ncomp=pls_bestpara_c)
+pls_coef_c = coef(pls)
+
+save(pls_fit_c,
+     pls_bestpara_c,
+     pls_test_MSE_c,
+     pls_coef_c,
      file = "./data/pls_results_completion.Rdata")
 sink(file ="./data/pls_results_completion.txt")
 cat("PLS Model")
 cat("\n")
-pls_fit
+pls_fit_c
 cat("\n")
 cat("Best Parameter")
 cat("\n")
-best_para
+pls_bestpara_c
 cat("\n")
 cat("PLS Test MSE")
 cat("\n")
-pls_test_MSE
+pls_test_MSE_c
+cat("\n")
+cat("PLS Official Coefficients for Completion Rates")
+cat("\n")
+pls_coef_c
 sink()
-
