@@ -11,34 +11,42 @@ options(warn = -1)
 library(xtable)
 library(png)
 library(grid)
+library(Matrix)
+library(methods)
 library(ggplot2)
 library(reshape2)
 
 # load data in our working environment 
-load('../data/ols-regression.RData')
-load('../data/ridge-regression.RData')
-load('../data/lasso-regression.RData')
-load('../data/PCR.RData')
-load('../data/PLSR.RData')
+load('../../data/ols_results_completion.RData')
+load('../../data/ridge_results_completion.RData')
+load('../../data/lasso_results_completion.RData')
+load('../../data/pcr_results_completion.RData')
+load('../../data/pls_results_completion.RData')
+load('../../data/ols_results_income.RData')
+load('../../data/ridge_results_income.RData')
+load('../../data/lasso_results_income.RData')
+load('../../data/pcr_results_income.RData')
+load('../../data/pls_results_income.RData')
+
 
 # load our functions
-source("../code/functions/mse-function.R")
+source("../../code/functions/function_mse.R")
 @
 
 
 <<coefficients, results=tex, echo=FALSE>>=
 # Extract coefficients and convert them into vectors
-osl_coef_vector <- osl_coef[1:12]
-ridge_coef_vector <- unlist(ridge_coef)[1:12]
-lasso_coef_vector <- unlist(lasso_coef)[1:12]
-pcr_coef_vector <- c(0, pcr_coef[1:11])
-plsr_coef_vector <- c(0, plsr_coef[1:11])
+osl_coef_vector <- ols_completion_coeffs[2:16]
+ridge_coef_vector <- unlist(ridge_coef_c)[2:16]
+lasso_coef_vector <- unlist(lasso_coef_c)[2:16]
+pcr_coef_vector <- pcr_coef_c[1:15]
+plsr_coef_vector <- pls_coef_c[1:15]
 
 # Create a table of regression coefficients for all methods
 table_coef <- data.frame("OLS" = osl_coef_vector, "Ridge" = ridge_coef_vector, 
                          "Lasso" = lasso_coef_vector, "PCR" = pcr_coef_vector,
                          "PLSR" = plsr_coef_vector)
-rownames(table_coef) <- rownames(ridge_coef)
+rownames(table_coef) <- rownames(ridge_coef_c[2:16])
 
 @
 
@@ -61,8 +69,9 @@ Now let's look at another table with the test MSE values for the regression tech
 
 <<coefficients, results=tex, echo=FALSE>>=
 # Create test mse dataframe
-table_mse <- data.frame("ridge" = ridge_test_mse, "lasso" = lasso_test_mse,
-                        "PCR" = pcr_test_mse, "PLSR" = plsr_test_mse)
+
+table_mse <- data.frame("ridge" = ridge_test_MSE_c, "lasso" = lasso_test_MSE_c,
+                        "PCR" = pcr_test_MSE_c, "PLSR" = pls_test_MSE_c)
 rownames(table_mse) <- "MSE Value"
 
 # Use xtable to display our test mse dataframe
@@ -83,7 +92,8 @@ plot_table_coef <- cbind(data.frame("Predictors" = rownames(table_coef)), table_
 rownames(plot_table_coef) <- NULL
 
 # Reshape our dataframe in order to plot multiple lines
-plot_table_coef <- melt(plot_table_coef, id.vars = "Predictors" , value.name= "value", variable.name= "Methods")
+plot_table_coef <- melt(plot_table_coef, id.vars = "Predictors" , value.name= "value",
+                        variable.name= "Methods")
 
 # Use ggplot to acchieve multiple lines plot
 ggplot(plot_table_coef, aes(x = Predictors, y=value, group = Methods, colour = Methods)) +
