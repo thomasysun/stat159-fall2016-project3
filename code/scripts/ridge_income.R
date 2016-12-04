@@ -47,15 +47,15 @@ save(ridge_train_i,
 sink(file ="./data/ridge_results_income.txt")
 cat("Ridge Model")
 cat("\n")
-ridge_train
+ridge_train_i
 cat("\n")
 cat("Best Lambda")
 cat("\n")
-bestlam_1
+ridge_bestlam_i
 cat("\n")
 cat("Ridge Test MSE")
 cat("\n")
-ridge_test_MSE
+ridge_test_MSE_i
 cat("\n")
 cat("Ridge Official Coefficients for Income")
 cat("\n")
