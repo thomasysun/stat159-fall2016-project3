@@ -37,21 +37,21 @@ lasso = glmnet(predictors,response,lambda=grid, intercept = FALSE)
 lasso_coef_c = predict(lasso,type="coefficients",s=lasso_bestlam_c)
 save(lasso_train_c,
      lasso_bestlam_c,
-     lasso_test_MSE,
+     lasso_test_MSE_c,
      lasso_coef_c,
      file = "./data/lasso_results_completion.Rdata")
 sink(file ="./data/lasso_results_completion.txt")
 cat("Lasso Model")
 cat("\n")
-lasso_train
+lasso_train_c
 cat("\n")
 cat("Best Lambda")
 cat("\n")
-bestlam_2
+lasso_bestlam_c
 cat("\n")
 cat("Lasso Test MSE")
 cat("\n")
-lasso_test_MSE
+lasso_test_MSE_c
 cat("\n")
 cat("Lasso Official Coefficients for Completion Rates")
 cat("\n")
