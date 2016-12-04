@@ -1,7 +1,7 @@
 
 library(ggplot2)
 
-clean_2012 <- read.csv("../data/clean_2012.csv")
+clean_2012 <- readRDS("../data/clean_2012.rds")
 
 ui <- fluidPage(
   titlePanel("School Data"),
