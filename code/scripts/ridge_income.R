@@ -40,7 +40,7 @@ ridge = glmnet(predictors,response, intercept = FALSE,
 ridge_coef_i = predict(ridge,type="coefficients",s=bestlam_1)
 
 save(ridge_train_i,
-     ridge_bestlam_1_i,
+     ridge_bestlam_i,
      ridge_test_MSE_i,
      ridge_coef_i,
      file = "./data/ridge_results_income.Rdata")
