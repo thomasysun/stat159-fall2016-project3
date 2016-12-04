@@ -207,3 +207,23 @@ Best Lambda
 
 Lasso Test MSE
 [1] 0.4898253
+
+Lasso Official Coefficients for Completion Rates
+16 x 1 sparse Matrix of class "dgCMatrix"
+                       1
+(Intercept)   .         
+Total        -0.03536002
+White         .         
+Black         .         
+Hispanic      .         
+Asian         0.06909823
+Aian         -0.02013546
+Pac.Islander  .         
+Mixed         .         
+NonResAlien   .         
+Unknown       .         
+EarningsAgg   0.09539173
+LowIncome    -0.24499559
+Mid1Income   -0.15662232
+FirstGen     -0.32205999
+FedLoans      .         

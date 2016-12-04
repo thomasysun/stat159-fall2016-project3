@@ -207,3 +207,23 @@ Best Lambda
 
 Lasso Test MSE
 [1] 0.6182489
+
+Lasso Official Coefficients for Income
+16 x 1 sparse Matrix of class "dgCMatrix"
+                         1
+(Intercept)    .          
+Total          0.017250949
+White         -0.061517254
+Black          .          
+Hispanic      -0.067053859
+Asian          0.373288849
+Aian           .          
+Pac.Islander  -0.111257285
+Mixed          0.008855484
+NonResAlien    0.024672904
+Unknown        0.202958065
+Completion4yr  0.111537082
+LowIncome     -0.273884375
+Mid1Income    -0.112982920
+FirstGen       .          
+FedLoans      -0.190310569

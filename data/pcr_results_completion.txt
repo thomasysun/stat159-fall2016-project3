@@ -2,10 +2,31 @@ PCR Model
 Principal component regression , fitted with the singular value decomposition algorithm.
 Cross-validated using 10 random segments.
 Call:
-pcr(formula = response ~ as.matrix(predictors), subset = train_set,     scale = FALSE, validation = "CV")
+pcr(formula = response ~ predictors, subset = train_set, scale = FALSE,     validation = "CV")
 
 Best Parameter
 [1] 12
 
 PCR Test MSE
 [1] 0.4916237
+
+PCR Official Coefficients for Completion Rates
+, , 12 comps
+
+                  response
+Total        -0.0681207183
+White         0.0003775043
+Black        -0.0218251818
+Hispanic      0.0333555005
+Asian         0.0692454893
+Aian         -0.0493921537
+Pac.Islander -0.0122016355
+Mixed         0.0075344531
+NonResAlien   0.0278787862
+Unknown      -0.0428391635
+EarningsAgg   0.1479497962
+LowIncome    -0.2489197183
+Mid1Income   -0.1757078316
+FirstGen     -0.3129105791
+FedLoans      0.0550647241
+

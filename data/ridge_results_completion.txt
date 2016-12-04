@@ -207,3 +207,23 @@ Best Lambda
 
 Ridge Test MSE
 [1] 0.4898001
+
+Ridge Official Coefficients for Completion Rates
+16 x 1 sparse Matrix of class "dgCMatrix"
+                        1
+(Intercept)   .          
+Total        -0.062368192
+White         0.013746236
+Black        -0.031677441
+Hispanic      0.009631110
+Asian         0.086368362
+Aian         -0.050706006
+Pac.Islander -0.022923407
+Mixed         0.006023959
+NonResAlien   0.029652160
+Unknown      -0.033018995
+EarningsAgg   0.117193189
+LowIncome    -0.226599782
+Mid1Income   -0.162109511
+FirstGen     -0.278947782
+FedLoans      0.024908274

@@ -26,7 +26,7 @@ as.matrix(predictors)Mid1Income    -1.383e-01  2.020e-02  -6.846 1.05e-11 ***
 as.matrix(predictors)FirstGen       8.288e-02  3.693e-02   2.244    0.025 *  
 as.matrix(predictors)FedLoans      -2.090e-01  2.170e-02  -9.630  < 2e-16 ***
 ---
-Signif. codes:  0 â€˜***â€™ 0.001 â€˜**â€™ 0.01 â€˜*â€™ 0.05 â€˜.â€™ 0.1 â€˜ â€™ 1
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 Residual standard error: 0.7329 on 1724 degrees of freedom
 Multiple R-squared:  0.4675,	Adjusted R-squared:  0.4629 
