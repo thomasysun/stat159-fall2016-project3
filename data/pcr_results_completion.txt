@@ -5,28 +5,27 @@ Call:
 pcr(formula = response ~ predictors, subset = train_set, scale = FALSE,     validation = "CV")
 
 Best Parameter
-[1] 12
+[1] 14
 
 PCR Test MSE
-[1] 0.4916237
+[1] 0.279521
 
 PCR Official Coefficients for Completion Rates
-, , 12 comps
+, , 14 comps
 
-                  response
-Total        -0.0681207183
-White         0.0003775043
-Black        -0.0218251818
-Hispanic      0.0333555005
-Asian         0.0692454893
-Aian         -0.0493921537
-Pac.Islander -0.0122016355
-Mixed         0.0075344531
-NonResAlien   0.0278787862
-Unknown      -0.0428391635
-EarningsAgg   0.1479497962
-LowIncome    -0.2489197183
-Mid1Income   -0.1757078316
-FirstGen     -0.3129105791
-FedLoans      0.0550647241
+                   response
+Total           0.038974680
+White           0.020449754
+Black           0.111935944
+Hispanic        0.029070345
+Asian           0.002237588
+AmericanIndian -0.020483628
+NonResAlien    -0.034735015
+EarningsAgg    -0.039386277
+LowIncome      -0.262691512
+Mid1Income     -0.027271966
+FirstGen       -0.049043217
+FedLoans       -0.066464995
+CostAttendance  0.461064104
+Avg_SAT         0.334615454
 

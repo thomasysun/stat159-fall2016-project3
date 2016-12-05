@@ -5,28 +5,27 @@ Call:
 plsr(formula = response ~ predictors, subset = train_set, scale = FALSE,     validation = "CV")
 
 Best Parameter
-[1] 2
+[1] 13
 
 PLS Test MSE
-[1] 0.4865275
+[1] 0.2795265
 
 PLS Official Coefficients for Completion Rates
-, , 2 comps
+, , 13 comps
 
-                 response
-Total        -0.083445139
-White         0.030358401
-Black        -0.033794981
-Hispanic     -0.016702004
-Asian         0.071637007
-Aian         -0.087089362
-Pac.Islander -0.031793360
-Mixed        -0.003716912
-NonResAlien   0.046274803
-Unknown      -0.021229282
-EarningsAgg   0.143149866
-LowIncome    -0.223033641
-Mid1Income   -0.187593482
-FirstGen     -0.274973825
-FedLoans      0.026031860
+                   response
+Total           0.038968246
+White           0.020441100
+Black           0.111934492
+Hispanic        0.029073206
+Asian           0.002264258
+AmericanIndian -0.020484173
+NonResAlien    -0.034736797
+EarningsAgg    -0.039424479
+LowIncome      -0.262708240
+Mid1Income     -0.027261010
+FirstGen       -0.049075167
+FedLoans       -0.066467265
+CostAttendance  0.461052421
+Avg_SAT         0.334610572
 

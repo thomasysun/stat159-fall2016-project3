@@ -5,28 +5,27 @@ Call:
 plsr(formula = response ~ predictors, subset = train_set, scale = FALSE,     validation = "CV")
 
 Best Parameter
-[1] 9
+[1] 8
 
 PLS Test MSE
-[1] 0.6169816
+[1] 0.3220509
 
 PLS Official Coefficients for Income
-, , 9 comps
+, , 8 comps
 
                    response
-Total          0.0241143687
-White         -0.1168384579
-Black         -0.0003496769
-Hispanic      -0.0904973902
-Asian          0.3751436687
-Aian           0.0106592944
-Pac.Islander  -0.1280880282
-Mixed          0.0156372841
-NonResAlien    0.0269750857
-Unknown        0.2032097647
-Completion4yr  0.1220459695
-LowIncome     -0.3639654007
-Mid1Income    -0.1379660390
-FirstGen       0.0835315848
-FedLoans      -0.2095395126
+Total           0.033219073
+White          -0.190812387
+Black           0.077564197
+Hispanic        0.016280141
+Asian           0.207594956
+AmericanIndian  0.011600709
+NonResAlien     0.006893434
+Completion4yr  -0.052732268
+LowIncome      -0.337533291
+Mid1Income     -0.054909776
+FirstGen        0.270385624
+FedLoans       -0.104219566
+CostAttendance  0.171603494
+Avg_SAT         0.618225854
 

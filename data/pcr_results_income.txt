@@ -5,28 +5,27 @@ Call:
 pcr(formula = response ~ predictors, subset = train_set, scale = FALSE,     validation = "CV")
 
 Best Parameter
-[1] 14
+[1] 13
 
 PCR Test MSE
-[1] 0.6168842
+[1] 0.3223734
 
 PCR Official Coefficients for Income
-, , 14 comps
+, , 13 comps
 
-                   response
-Total          0.0241245082
-White         -0.1164898618
-Black         -0.0003013523
-Hispanic      -0.0910620527
-Asian          0.3752553962
-Aian           0.0104038133
-Pac.Islander  -0.1278471013
-Mixed          0.0156398277
-NonResAlien    0.0273032171
-Unknown        0.2031738780
-Completion4yr  0.1223724231
-LowIncome     -0.3636461365
-Mid1Income    -0.1378425566
-FirstGen       0.0841644477
-FedLoans      -0.2097039758
+                  response
+Total           0.03295668
+White          -0.16423302
+Black           0.10055817
+Hispanic        0.02787166
+Asian           0.21859482
+AmericanIndian  0.01361263
+NonResAlien     0.01076140
+Completion4yr  -0.05166737
+LowIncome      -0.33904087
+Mid1Income     -0.05919242
+FirstGen        0.27376148
+FedLoans       -0.10535904
+CostAttendance  0.17362212
+Avg_SAT         0.61350679
 
