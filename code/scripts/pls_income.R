@@ -1,0 +1,59 @@
+##regression models
+library("glmnet")
+library('pls')
+#load mse function
+source("code/functions/function_mse.R")
+#pre-modeling data processing
+clean_2012 = readRDS("data/clean_2012.rds")
+clean_2012_public = readRDS("data/clean_2012_public.rds")
+
+#delete na values
+clean_2012 = na.omit(clean_2012)
+
+#scale data
+clean_2012 = scale(as.matrix(clean_2012[,c(3:17)]), center = TRUE, scale = TRUE)
+
+#split into train and test
+set.seed(5)
+train_set = sample(c(1:1334), size = 1000)
+predictors = clean_2012[,c(1:8,10:15)]
+response = clean_2012[,c(9)]
+test=(-train_set)
+response_test=response[test]
+
+
+## Partial Least Squares Regression
+pls_fit_i = plsr(response~predictors, subset = train_set, scale = FALSE, validation ="CV")
+pls_bestpara_i = which(pls_fit_i$validation$PRESS == min(pls_fit_i$validation$PRESS))
+validationplot(pls_fit_i, val.type="MSEP")
+# choose best model
+set.seed(5)
+pls_pred = predict(pls_fit_i,predictors[-train_set,],ncomp=pls_bestpara_i)
+pls_test_MSE_i = mse(pls_pred, response_test)
+# PLS on full dataset
+pls = plsr(response~predictors, scale = FALSE, ncomp=pls_bestpara_i)
+pls_coef_i = coef(pls)
+
+save(pls_fit_i,
+     pls_bestpara_i,
+     pls_test_MSE_i,
+     pls_coef_i,
+     file = "./data/pls_results_income.Rdata")
+sink(file ="./data/pls_results_income.txt")
+cat("PLS Model")
+cat("\n")
+pls_fit_i
+cat("\n")
+cat("Best Parameter")
+cat("\n")
+pls_bestpara_i
+cat("\n")
+cat("PLS Test MSE")
+cat("\n")
+pls_test_MSE_i
+cat("\n")
+cat("PLS Official Coefficients for Income")
+cat("\n")
+pls_coef_i
+sink()
+
