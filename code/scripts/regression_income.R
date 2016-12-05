@@ -23,12 +23,13 @@ response_test=response[test]
 
 
 ##OLS
-ols_income = lm(response~as.matrix(predictors))
+ols_income = lm(response~predictors)
 ols_income_summary = summary(ols_income)
-ols_income_coeffs = as.numeric(ols_income$coefficients)[-1]
+ols_coef_i = coef(ols_income_summary)
+rownames(ols_coef_i) = sub("^predictors", "", rownames(ols_coef_i))
 
 # Save results in binary file
-save(ols_income, ols_income_summary, ols_income_coeffs,
+save(ols_income, ols_income_summary, ols_coef_i,
      file = "data/ols_results_income.RData")
 
 # Save results to a text file
@@ -36,6 +37,7 @@ sink("data/ols_results_income.txt")
 cat("Threshold income results of multiple linear regression model via Ordinary Least Square", "\n")
 ols_income_summary
 sink()
+
 
 ##Ridge regression
 grid = 10^seq(10, -2, length = 100)

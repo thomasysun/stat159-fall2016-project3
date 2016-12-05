@@ -23,12 +23,13 @@ response_test=response[test]
 
 
 ##OLS
-ols_completion = lm(response~as.matrix(predictors))
+ols_completion = lm(response~predictors)
 ols_completion_summary = summary(ols_completion)
-ols_completion_coeffs = as.numeric(ols_completion$coefficients)[-1]
+ols_coef_c = coef(ols_completion_summary)
+rownames(ols_coef_c) = sub("^predictors", "", rownames(ols_coef_c))
 
 # Save results in binary file
-save(ols_completion, ols_completion_summary, ols_completion_coeffs,
+save(ols_completion, ols_completion_summary, ols_coef_c,
      file = "data/ols_results_completion.RData")
 
 # Save results to a text file
