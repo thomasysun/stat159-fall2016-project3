@@ -2,22 +2,22 @@
 library("glmnet")
 library('pls')
 #load mse function
-source("../functions/function_mse.R")
+source("code/functions/function_mse.R")
 #pre-modeling data processing
 clean_2012 = readRDS("data/clean_2012.rds")
 clean_2012_public = readRDS("data/clean_2012_public.rds")
 
 #delete na values
-clean_2012 = na.omit(clean_2012[,-14])
+clean_2012 = na.omit(clean_2012)
 
 #scale data
-clean_2012 = scale(as.matrix(clean_2012[,c(3:21)]), center = TRUE, scale = TRUE)
+clean_2012 = scale(as.matrix(clean_2012[,c(3:17)]), center = TRUE, scale = TRUE)
 
 #split into train and test
 set.seed(5)
-train_set = sample(c(1:1740), size = 1220)
-predictors = clean_2012[,c(1:10,12,16:19)]
-response = clean_2012[,c(11)]
+train_set = sample(c(1:1334), size = 1000)
+predictors = clean_2012[,c(1:7,9:15)]
+response = clean_2012[,c(8)]
 test=(-train_set)
 response_test=response[test]
 
@@ -44,7 +44,7 @@ ridge_train_c = cv.glmnet(as.matrix(predictors[train_set, ]), response[train_set
                           standardize = FALSE, lambda = grid, alpha = 0)
 plot(ridge_train_c)
 #lambda min
-ridge_bestlam_c = ridge_train$lambda.min
+ridge_bestlam_c = ridge_train_c$lambda.min
 
 # choose best model
 ridge_pred = predict(ridge_train_c,s=ridge_bestlam_c,newx=as.matrix(predictors[-train_set,]))
@@ -184,3 +184,4 @@ cat("PLS Official Coefficients for Completion Rates")
 cat("\n")
 pls_coef_c
 sink()
+

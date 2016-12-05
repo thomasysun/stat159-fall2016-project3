@@ -2,22 +2,22 @@
 library("glmnet")
 library('pls')
 #load mse function
-source("../functions/function_mse.R")
+source("code/functions/function_mse.R")
 #pre-modeling data processing
 clean_2012 = readRDS("data/clean_2012.rds")
 clean_2012_public = readRDS("data/clean_2012_public.rds")
 
 #delete na values
-clean_2012 = na.omit(clean_2012[,-14])
+clean_2012 = na.omit(clean_2012)
 
 #scale data
-clean_2012 = scale(as.matrix(clean_2012[,c(3:21)]), center = TRUE, scale = TRUE)
+clean_2012 = scale(as.matrix(clean_2012[,c(3:17)]), center = TRUE, scale = TRUE)
 
 #split into train and test
 set.seed(5)
-train_set = sample(c(1:1740), size = 1220)
-predictors = clean_2012[,c(1:11,16:19)]
-response = clean_2012[,c(12)]
+train_set = sample(c(1:1334), size = 1000)
+predictors = clean_2012[,c(1:8,10:15)]
+response = clean_2012[,c(9)]
 test=(-train_set)
 response_test=response[test]
 
@@ -25,7 +25,7 @@ response_test=response[test]
 ##Ridge regression
 grid = 10^seq(10, -2, length = 100)
 ridge_train_i = cv.glmnet(as.matrix(predictors[train_set, ]), response[train_set], intercept = FALSE, 
-                        standardize = FALSE, lambda = grid, alpha = 0)
+                          standardize = FALSE, lambda = grid, alpha = 0)
 plot(ridge_train_i)
 #lambda min
 ridge_bestlam_i = ridge_train_i$lambda.min
@@ -37,7 +37,7 @@ ridge_test_MSE_i = mse(ridge_pred, response_test)
 #ridge on full dataset
 ridge = glmnet(predictors,response, intercept = FALSE, 
                standardize = FALSE, lambda = grid, alpha = 0)
-ridge_coef_i = predict(ridge,type="coefficients",s=bestlam_1)
+ridge_coef_i = predict(ridge,type="coefficients",s=ridge_bestlam_i)
 
 save(ridge_train_i,
      ridge_bestlam_i,
