@@ -1,19 +1,15 @@
 
 # Variables
-credit = data/Credit.csv
-quant = eda-quantitative-script.R
-qual = eda-qualitative-script.R
-mse = code/functions/mse-function.R
+clean_data = data/clean_2012.rds
+eda = exploratory_data_analysis.R
+mse = code/functions/function_mse.R
 clean_data = data/train-and-test-set.RData
-ols = ols-regression-script.R
-ridge = ridge-regression-script.R
-lasso = lasso-regression-script.R
-pcr = PCR-script.R
-plsr = PLSR-script.R
+completion = regression_completion.R
+income = regression_income.R
 sections = report/sections/*.Rmd
 
 #declare phony targets
-.PHONY: all data tests eda pre ols ridge lasso pcr plsr regressions report slides session clean
+.PHONY: all tests eda completion income regressions report slides session clean
 
 # ------------------------------------------------------------------------------------------
 # default targets
@@ -22,93 +18,60 @@ all: eda regressions report
 
 
 # ------------------------------------------------------------------------------------------
-# download data
-# ------------------------------------------------------------------------------------------
-data:
-	curl "http://www-bcf.usc.edu/~gareth/ISL/Credit.csv" > $(credit)
-
-
-# ------------------------------------------------------------------------------------------
 # unit tests
 # ------------------------------------------------------------------------------------------
-tests: code/test-that.R code/functions/mse-function.R
-	cd code && Rscript test-that.R
+tests: code/test_that.R code/functions/function_mse.R
+	cd code && Rscript test_that.R
 
 
 # ------------------------------------------------------------------------------------------
-# run eda-qualitative-script.R and eda-quantitative-script.R
+# run eda
 # ------------------------------------------------------------------------------------------
-eda: code/scripts/$(qual) code/scripts/$(quant) $(credit)
-	cd code/scripts && Rscript $(qual)
-	cd code/scripts && Rscript $(quant)
+eda: code/scripts/$(eda) $(clean_data)
+	cd code/scripts && Rscript $(eda)
 
 
 # ------------------------------------------------------------------------------------------
-# pre-process data
+# run completion rate regression
 # ------------------------------------------------------------------------------------------
-pre: code/scripts/pre-process-script.R $(credit)
-	cd code/scripts && Rscript pre-process-script.R
+ols: code/scripts/$(completion) $(clean_data) $(mse)
+	cd code/scripts && Rscript $(completion)
 
-
+	
 # ------------------------------------------------------------------------------------------
-# run OLS regression
+# run income regression
 # ------------------------------------------------------------------------------------------
-ols: code/scripts/$(ols) $(clean_data) $(mse)
-	cd code/scripts && Rscript $(ols)
+ridge: code/scripts/$(income) $(clean_data) $(mse)
+	cd code/scripts && Rscript $(income)
 
-
+	
 # ------------------------------------------------------------------------------------------
-# run ridge regression
-# ------------------------------------------------------------------------------------------
-ridge: code/scripts/$(ridge) $(clean_data) $(mse) 
-	cd code/scripts && Rscript $(ridge)
-
-
-# ------------------------------------------------------------------------------------------
-# run lasso regression
-# ------------------------------------------------------------------------------------------
-lasso: code/scripts/$(lasso) $(clean_data) $(mse)
-	cd code/scripts && Rscript $(lasso)	
-
-
-# ------------------------------------------------------------------------------------------
-# run PCR regression
-# ------------------------------------------------------------------------------------------
-pcr: code/scripts/$(pcr) $(clean_data) $(mse)
-	cd code/scripts && Rscript $(pcr)
-
-
-# ------------------------------------------------------------------------------------------
-# run PLSR regression
-# ------------------------------------------------------------------------------------------
-plsr: code/scripts/$(plsr) $(clean_data) $(mse)
-	cd code/scripts && Rscript $(plsr)
-
-
-# ------------------------------------------------------------------------------------------
-# run all five types of regressions
+# run both regressions
 # ------------------------------------------------------------------------------------------
 regressions:
-	make ols
-	make ridge
-	make lasso
-	make pcr
-	make plsr
+	make completion
+	make income
 
 
 # ------------------------------------------------------------------------------------------
-# generate Rmd and PDF report
+# generate Rmw and PDF report
 # ------------------------------------------------------------------------------------------
 report: $(sections) $(clean_data) $(mse)
-	cat $(sections) > report/report.Rmd
-	cd report && Rscript -e 'library(rmarkdown); render("report.Rmd","pdf_document")'
+	cd report && R CMD Sweave report.Rnw
+	Rscript -e "library(knitr); knit2pdf('report.tex')"
 
 
 # ------------------------------------------------------------------------------------------
 # Rmd to HTML slides
 # ------------------------------------------------------------------------------------------
 slides: $(clean_data) $(mse)
-	cd slides && Rscript -e 'library(rmarkdown); render("predictive-modeling-slides.Rmd")'
+	cd slides && Rscript -e 'library(rmarkdown); render("slides.Rmd")'
+	
+# ------------------------------------------------------------------------------------------
+# Deploy shinyapp
+# ------------------------------------------------------------------------------------------
+slides: $(clean_data)
+	Rscript -e "shiny::runApp('shinyapp')"
 
 
 # ------------------------------------------------------------------------------------------
