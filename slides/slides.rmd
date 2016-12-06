@@ -1,0 +1,86 @@
+---
+title: "Allocating Grant Money using College ScoreCard Data"
+author: "Lydia Maher, Ziao Liu, Thomas Sun"
+date: "December 5, 2016"
+output: ioslides_presentation
+---
+
+## Introduction
+- In this report we assess the performance of publicly funded schools to determine the allocation of grant money for policymakers. 
+- Specifically, we attempt to identify the best schools in the US in terms of their demographic, academic, and socioeconomic characteristics in order to help increase equity and graduation rates for underserved populations.
+
+## More Background
+- A main concern for policymakers and families alike is the quality of higher education institutions. 
+- Demand in the labor market for workers with educational attainment beyond high school growing significantly
+
+<div class='centered'>
+=growing inequality for underserved populations
+</div>
+
+- In an effort to promote equity and level the playing field, the government has set up several programs, such as the Pell Grant, that help enable underserved populations to attend university. 
+
+## Data
+- To perform our analyses, we use data from College Scorecard, provided by the US Department of Education. 
+- The full College Scorecard dataset contains extensive data on characteristics and indicators for all federal financial aid eligible schools in the US every year for the past several years. 
+- For the purpose of our study, we select several variables that we deemed relevant to determining performance of a school. These are: **total number of students**, **race**, **four year completion rate**, **cost of attendance**, **first generation status**, **income**, and **aggregate earnings**.
+
+## Methodology
+- We use predictive modeling techniques to find the determinants for graduation rates and post-graduation income. 
+- These include *ridge regression*, *lasso regression*, *principal components regression*, and *partial least squares regression* applied to varibales listed in previous slide.
+- The best fitting model is then used to make accurate predictons on graduation and income.
+- Finally, we use the results to find which variables have the biggest impact on graduation and earnings after graduation and use this to sort which schools are in most urgent need of funding.
+
+## Exploratory Data Analysis -Cost
+<div class='centered'>
+![](./images/costattend_earnings.png)
+</div>
+
+## Exploratory Data Analysis -Cost
+<div class='centered'>
+![](./images/costattend_completion.png)
+</div>
+
+## Exploratory Data Analysis -First Gen
+<div class='centered'>
+![](./images/firstgen_completion.png)
+</div>
+
+## Exploratory Data Analysis -First Gen
+<div class='centered'>
+![](./images/firstgen_earnings.png)
+</div>
+
+## Exploratory Data Analysis -SAT
+<div class='centered'>
+![](./images/avgSAT_completion.png)
+</div>
+
+## Exploratory Data Analysis -SAT
+<div class='centered'>
+![](./images/avgSAT_earnings.png)
+</div>
+
+## Exploratory Data Analysis -Race
+<div class='centered'>
+![](./images/black_earnings_all.png)
+</div>
+
+## Exploratory Data Analysis -Race
+<div class='centered'>
+![](./images/black_earnings_public.png)
+</div>
+
+## Exploratory Data Analysis
+<div class='centered'>
+![](./images/scatterplot-matrix.png)
+</div>
+
+## Results
+- From our results we see that coming from a **low income bracket family**, having **federal loans**, and being a **first generation** student have a strong negative relationship with income. 
+- Interestingly, **race** does *not* seem to have a large influence on completion rates after controlling for other factors. If anything, an increased percentage of black population tends to increase completion rates. 
+- **Cost of attendance** and **SAT scores** heavily influence **completion rates** positively as well, possibly because more prestigious schools are more expensive with better students so they have better graduation rates.
+
+## Most Urgent Schools
+- Using these results, we compiled 3 lists of the 25 schools with the most low income students, the students with the most federal loans and then the most first generation students. 
+- There were 7 schools falling in 2 of these categories including **Lansing Community College, Mississippi Valley State University, Upper Cape Cod Regional Technical School, The Artisan College of Cosmetology, American College for Medical Careers, West Coast University-Dallas, Keiser University-Port St Lucie**. 
+- This is a good starting point for which schools to allocate money to. 
