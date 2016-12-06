@@ -1,7 +1,5 @@
-\documentclass{article}
+% !Rnw root = ../report.Rnw
 
-\begin{document}
-\SweaveOpts{concordance=TRUE}
 
 \section*{Introduction}
 
@@ -9,5 +7,3 @@ A main concern for policymakers and families alike is the quality of higher educ
 
 To help families decide on the best school for their kids, the US Department of Education created a database of all US universities called College Scorecard. It contains highly detailed data various aspects on every university, such as graduation rates, composition of the student body, post-graduation income, etc. This dataset provides useful information that can be used to asses the performance of schools in order to allocate grant money. 
 
-
-\end{document}

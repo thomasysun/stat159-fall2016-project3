@@ -32,20 +32,28 @@ load('../../data/pls_results_income.RData')
 source("../../code/functions/function_mse.R")
 @
 
-\subsection*{Completion Rates}
-First, let's look at our benchmark - OLS regression. We use full set of data that is mean centering and standardizing to fit the OLS model. OLS model will be served as our benchmark for comparison with later four different methods.  
+\subsection*{Ordinary Least Squares}
+First, let's look at our benchmark - OLS regression. We use full set of data that is mean centering and standardizing to fit the OLS model. OLS model will be served as our benchmark for comparison with later four different methods.
 
-
-Here is more information about OLS regression:
+Here is more information about OLS regression for four year completion rates:
 <<xtable, results=tex, echo=FALSE>>=
 xtable_summary <- xtable(ols_coef_c, 
                          caption = 'Summary Table of OLS Regression for Completion Rates')
 print(xtable_summary, comment=FALSE, type = "latex", max.levels=0, caption.placement = 'top')
 @
 
-Table 1 exhibits estimates of all coefficients and their corresponding t-test and p-value.
 
-From the above information, we can conclude that predictors such as *Income*, *Limit*, *Rating*, *Cards*, and *Student* are extremely significant.
+From the above information, we can conclude that the coefficient for predictors such as family income, federal loans, and SAT score are extremely significant. Meanwhile, proportion of Black and Hispanic population is not significant. Next, we looked determinants of income post-graduation. The following is a table showing the OLS regression coefficients for our benchmark.
+
+\vspace{100mm}
+
+<<xtable, results=tex, echo=FALSE>>=
+xtable_summary <- xtable(ols_coef_i, 
+                         caption = 'Summary Table of OLS Regression for Income 10 Years After Graduation')
+print(xtable_summary, comment=FALSE, type = "latex", max.levels=0, caption.placement = 'top')
+@
+
+Here we find that the statistically significant predictors are similar to those of the completion rate regression. Again, Black and Hispanic populations are shown to have no significant effect on income. 
 
 \subsection*{Other methods}
 
@@ -55,25 +63,7 @@ We find the $\lambda$ for the best model. Then, we use the test set to compute t
 
 PCR and PLSR follow a similar process As before, we check the mission value in the data for both train and test sets and use random seeds for cross-validation. We then conduct 10-fold cross-validation on the test set to find out the best number of principal components used. 
 
-Once finding the number of principal components considered for the best model, we use the test set to compute the test Mean Square Error and finally refit the model on the full data set using the best number of components and get official coefficients.
+Once finding the number of principal components considered for the best model, we use the test set to compute the test Mean Square Error and finally refit the model on the full data set using the best number of components and get official coefficients. The next section shows the results from these methods.
 
-\begin{figure}[!hb]
-  \centering
-    \includegraphics[width=70mm]{../../images/total_completion.png}
-      \caption{the cross-validation errors in terms of the number of principal components used}
-\end{figure}
-
-Above is the plot of the cross-validation errors for each regression.
 \vspace{80mm}
-
-\subsection*{Post-Graduate Income}
-
-Next, we looked determinants of income post-graduation. The following is a table showing the OLS regression coefficients for our benchmark.
-
-<<xtable, results=tex, echo=FALSE>>=
-xtable_summary <- xtable(ols_coef_i, 
-                         caption = 'Summary Table of OLS Regression for Income')
-print(xtable_summary, comment=FALSE, type = "latex", max.levels=0, caption.placement = 'top')
-@
-
 \end{document}
