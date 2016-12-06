@@ -1,7 +1,5 @@
-\documentclass{article}
+% !Rnw root = ../report.Rnw
 
-\begin{document}
-\SweaveOpts{concordance=TRUE}
 
 \section*{Data}
 

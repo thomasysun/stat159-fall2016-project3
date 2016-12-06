@@ -3,6 +3,7 @@
 \begin{document}
 \SweaveOpts{concordance=TRUE}
 
+
 \section*{Results}
 
 \subsection*{Completion Rates}
@@ -35,7 +36,31 @@ load('../../data/pls_results_income.RData')
 source("../../code/functions/function_mse.R")
 @
 
-We obtain the test mean squared errors for every predictive model from our analysis. Below is the table of MSEs for each model.
+From our exploratory analysis we find several interesting relationships between completion rates and several predictors. Below are some scatterplots exhibiting these relationships. From the below figures we see that first generation status is negatively correlated with completion, cost of attendance is positively, and percentage of student body as black seems to have no correlation.
+
+\begin{figure}[!hb]
+  \centering
+    \includegraphics[width=55mm]{../../images/firstgen_completion.png}
+      \caption{Plot of Completion Rates against First Generation Status}
+\end{figure}
+
+
+\begin{figure}[!hb]
+  \centering
+    \includegraphics[width=55mm]{../../images/costattend_completion.png}
+      \caption{Plot of Completion Rates against Cost of Attendance}
+\end{figure}
+
+\vspace{40mm}
+
+\begin{figure}[!hb]
+  \centering
+    \includegraphics[width=55mm]{../../images/black_completion_all.png}
+      \caption{Plot of Completion Rates against Percentage of Black Population}
+\end{figure}
+
+
+Now let's look at our predictive models. We obtain the test mean squared errors for every predictive model from our analysis. Below is the table of MSEs for each model.
 
 <<coefficients, results=tex, echo=FALSE>>=
 # Create test mse dataframe
@@ -90,7 +115,30 @@ From our results we see that coming from a low income bracket family, having fed
 
 \subsection*{Income}
 
-We look the MSE of each model, this time with post-graduate income as our regressor.
+From our exploratory analysis we also find some interesting relationships between income and several predictors. Below are some scatterplots exhibiting these relationships. From the below figures we see that, like with completion rates, first generation status is negatively correlated with completion, cost of attendance is positively, and percentage of student body as black seems to have no correlation.
+
+
+\begin{figure}[!hb]
+  \centering
+    \includegraphics[width=42mm]{../../images/firstgen_earnings.png}
+      \caption{Plot of Earnings against First Generation Status}
+\end{figure}
+\vspace{40mm}
+
+\begin{figure}[!hb]
+  \centering
+    \includegraphics[width=55mm]{../../images/costattend_earnings.png}
+      \caption{Plot of Earnings against Cost of Attendance}
+\end{figure}
+
+\begin{figure}[!hb]
+  \centering
+    \includegraphics[width=65mm]{../../images/black_earnings_all.png}
+      \caption{Plot of Earnings against Percentage of Black Population}
+\end{figure}
+
+
+Now, we look the MSE of each model, this time with post-graduate income as our regressor.
 
 <<coefficients, results=tex, echo=FALSE>>=
 # Extract coefficients and convert them into vectors
@@ -137,7 +185,8 @@ print(xtable_coef, comment=FALSE, type = "latex", caption.placement = 'top')
 
 Table 4 shows that the regression results are approximately similar for all models. Lasso regression sets some coefficients to exactly zero as expected.
 
-From these results we learn that coming from a low income bracket and having federal loans 
+From these results we learn that coming from a low income bracket and having federal loans are negatively associated with post-graduate income. Black and Hispanic population do not affect income, rather increased percentage of Whites has a negative effect while increased percentage of Asians has a positive effect. From this we learn that underrepresented races in universities do not affect post-graduate income after controlling for other variables. First generation status, cost of attendance, and SAT scores have a positive relationship with income. The last two may be expected for the same reason as the positive effect on completion rate, but the coefficient for first generation status may be suprising.
+
 
 
 
