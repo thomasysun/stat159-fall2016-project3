@@ -1,13 +1,13 @@
 #part 2
 
-clean_2012 <- readRDS("./data/clean_2012.rds")
-clean_2012_public <- readRDS("./data/clean_2012_public.rds")
+clean_2012 <- readRDS("../../data/clean_2012.rds")
+clean_2012_public <- readRDS("../../data/clean_2012_public.rds")
 
 #graph creation 
 #plot of total population vs 4yr completion rates
 library("ggplot2")
 #total_plot<- na.omit(clean_2012$Total)
-jpeg("./images/totalvs4yrcompletion.png")
+jpeg("../../images/totalvs4yrcompletion.png")
 p1 <- ggplot(clean_2012, aes(x = clean_2012$Total, y = clean_2012$Completion4yr))
 p1 + geom_point(aes(color=factor(clean_2012$SchoolType))) +
   theme(axis.title.x = element_text(face="bold", color="black", size=12),
@@ -22,7 +22,7 @@ p1 + geom_point(aes(color=factor(clean_2012$SchoolType))) +
 dev.off()
 
 #plot of black population vs earnings agg
-jpeg("./images/black_earnings_all.png")
+jpeg("../../images/black_earnings_all.png")
 p2 <- ggplot(clean_2012, aes(x = clean_2012$Black, y = clean_2012$EarningsAgg))
 p2 + geom_point(aes(color=factor(clean_2012$SchoolType))) +
   theme(axis.title.x = element_text(face="bold", color="black", size=12),
@@ -37,7 +37,7 @@ p2 + geom_point(aes(color=factor(clean_2012$SchoolType))) +
 dev.off()
 
 #same plot, only for public school though
-jpeg("./images/black_earnings_public.png")
+jpeg("../../images/black_earnings_public.png")
 p3 <- ggplot(clean_2012_public, aes(x = clean_2012_public$Black, y = clean_2012_public$EarningsAgg))
 p3 + geom_point() +
   theme(axis.title.x = element_text(face="bold", color="black", size=12),
@@ -50,7 +50,7 @@ p3 + geom_point() +
        title = "Public Schools Black Pop. vs Earnings Agg")
 dev.off()
 
-jpeg("./images/black_completion_public.png")
+jpeg("../../images/black_completion_public.png")
 p4 <- ggplot(clean_2012_public, aes(x = clean_2012_public$Black, y = clean_2012_public$Completion4yr))
 p4 + geom_point() +
   theme(axis.title.x = element_text(face="bold", color="black", size=12),
@@ -62,11 +62,11 @@ p4 + geom_point() +
        y = "Completion Rates",
        title = "%Black Population of School vs 4yr Completion Rates")
 
-jpeg("./images/avgSAT_histogram.png")
+jpeg("../../images/avgSAT_histogram.png")
 qplot(clean_2012$Avg_SAT ,data = clean_2012, geom = "histogram")
 dev.off()
 
-jpeg("./images/avgSAT_completion.png")
+jpeg("../../images/avgSAT_completion.png")
 p6 <- ggplot(clean_2012, aes(x = clean_2012$Avg_SAT, y = clean_2012$Completion4yr))
 p6 + geom_point(aes(color = clean_2012$EarningsAgg)) +
   labs(x = "Avg SAT Score",
@@ -81,7 +81,7 @@ theme(axis.title.x = element_text(face="bold", color="black", size=12),
       axis.text.x = element_blank())
 dev.off()
 
-jpeg("./images/avgSAT_earnings.png")
+jpeg("../../images/avgSAT_earnings.png")
 p7 <- ggplot(clean_2012, aes(x = clean_2012$Avg_SAT, y = clean_2012$EarningsAgg))
 p7 + geom_point() +
   theme(axis.title.x = element_text(face="bold", color="black", size=12),
@@ -94,7 +94,7 @@ p7 + geom_point() +
        title = "Avg SAT Scores vs Earnings")
 dev.off()
 
-jpeg("./images/costattend_earnings.png")
+jpeg("../../images/costattend_earnings.png")
 p8 <- ggplot(clean_2012, aes(x = clean_2012$CostAttendance, y = clean_2012$EarningsAgg))
 p8 + geom_point() +
   theme(axis.title.x = element_text(face="bold", color="black", size=12),
@@ -107,7 +107,7 @@ p8 + geom_point() +
        title = "Cost of Attendance vs Earnings")
 dev.off()
 
-jpeg("./images/costattend_completion.png")
+jpeg("../../images/costattend_completion.png")
 p88 <- ggplot(clean_2012, aes(x = clean_2012$CostAttendance, y = clean_2012$Completion4yr))
 p88 + geom_point() +
   theme(axis.title.x = element_text(face="bold", color="black", size=12),
@@ -120,7 +120,7 @@ p88 + geom_point() +
        title = "Cost of Attendance vs Completion")
 dev.off()
 
-jpeg("./images/firstgen_earnings.png")
+jpeg("../../images/firstgen_earnings.png")
 p9 <- ggplot(clean_2012, aes(x = clean_2012$FirstGen, y = clean_2012$EarningsAgg))
 p9 + geom_point() +
   theme(axis.title.x = element_text(face="bold", color="black", size=12),
@@ -133,7 +133,7 @@ p9 + geom_point() +
        title = "% First Gen vs Earnings Agg")
 dev.off()
 
-jpeg("./images/firstgen_completion.png")
+jpeg("../../images/firstgen_completion.png")
 p9 <- ggplot(clean_2012, aes(x = clean_2012$FirstGen, y = clean_2012$Completion4yr))
 p9 + geom_point() +
   theme(axis.title.x = element_text(face="bold", color="black", size=12),
@@ -146,7 +146,7 @@ p9 + geom_point() +
        title = "% First Gen vs Completion")
 dev.off()
 
-jpeg("./images/lowincome_completion.png")
+jpeg("../../images/lowincome_completion.png")
 p10 <- ggplot(clean_2012, aes(x = clean_2012$LowIncome, y = clean_2012$Completion4yr))
 p10 + geom_point() +
   theme(axis.title.x = element_text(face="bold", color="black", size=12),
@@ -170,10 +170,10 @@ correlation_matrix = cor(clean_2012[, c(which(colnames(clean_2012)== "Total"),
                       which(colnames(clean_2012)== "LowIncome")), ]) 
                         
 save(correlation_matrix,
-     file = "./data/correlation-matrix.Rdata")
+     file = "../../data/correlation-matrix.Rdata")
 
 ## Scatter Plot Matrix
-jpeg("./images/scatterplot-matrix.png")
+jpeg("../../images/scatterplot-matrix.png")
 pairs(clean_2012[, c(which(colnames(clean_2012)== "Total"),
                      which(colnames(clean_2012)== "White"), which(colnames(clean_2012)== "Black"),
                      which(colnames(clean_2012)== "Hispanic"), which(colnames(clean_2012)== "Asian"),
