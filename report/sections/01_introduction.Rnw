@@ -1,0 +1,13 @@
+\documentclass{article}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+
+\section*{Introduction}
+
+A main concern for policymakers and families alike is the quality of higher education institutions. The demand in the labor market for workers with educational attainment beyond high school has been growing significantly, and those unable to attend college due to lack of income are being further separated from the best opportunities. In an effort to promote equity and level the playing field, the government has set up several programs, such as the Pell Grant, that help enable underserved populations to attend university. Therefore, to determine allocation of these resources, it is important to understand what factors separate effective universities from low value universities.
+
+To help families decide on the best school for their kids, the US Department of Education created a database of all US universities called College Scorecard. It contains highly detailed data various aspects on every university, such as graduation rates, composition of the student body, post-graduation income, etc. This dataset provides useful information that can be used to asses the performance of schools in order to allocate grant money. 
+
+
+\end{document}

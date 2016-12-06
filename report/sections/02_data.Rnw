@@ -1,0 +1,15 @@
+\documentclass{article}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+
+\section*{Data}
+
+To perform our analyses, we use data from College Scorecard, provided by the US Department of Education. The full College Scorecard dataset contains extensive data on characteristics and indicators for all federal financial aid eligible schools in the US every year for the past several years. For the purpose of our study, we select two variables that we deemed relevant to determining performance of a school. These are four year graduation (completion) rates and post-graduate income ten years after graduation. We selected these two because they reflect the ability of the school to produce degree-holding scholars whose education and skills are valuable in the workforce. 
+
+In order to determine what factors influence these variables, we regress these outcomes on several predictors. These are: total number of students, race, income bracket of family, cost of attendance, first generation status, percent of students with federal loans, and average SAT score. For both completion rate and post-graduate income, we include the other one as a predictor as well. 
+
+We selected these predictors because we believe that they may be important in determining the outcome of a school. Total number of students may be important because larger student bodies might dilute the ability to focus on individual students and affect their learning. Higher percentage of under-repesented minorities may negatively influence graduation rates and earnings as well. Moreover, students facing high tuition costs and coming from poor income brackets or first generation families may find finishing a degree may be costly and burdensome. We also control for a student's innate ability through SAT scores.
+
+
+\end{document}

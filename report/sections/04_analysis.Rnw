@@ -38,7 +38,7 @@ First, let's look at our benchmark - OLS regression. We use full set of data tha
 
 Here is more information about OLS regression:
 <<xtable, results=tex, echo=FALSE>>=
-xtable_summary <- xtable(ols_completion_summary, 
+xtable_summary <- xtable(ols_coef_c, 
                          caption = 'Summary Table of OLS Regression for Completion Rates')
 print(xtable_summary, comment=FALSE, type = "latex", max.levels=0, caption.placement = 'top')
 @
@@ -51,7 +51,7 @@ From the above information, we can conclude that predictors such as *Income*, *L
 
 Next, we use the other regression methods to possibly find better fits to the data. We load mean centerized and standardized data before the analysis. For ridge and lasso regression, we first check mission value in data for both the train and test sets. We then initialize lambda and use random seeds for cross-validation. Next, we use the train set to conduct 10-fold cross-validation to find out the best tuning parameter.
 
-We find the $\lambda$ for the best model: best $\lambda$ = . Then, we use the test set to compute the test Mean Square Error: test MSE = . Finally we refit the model on the full data set using the best lambda and get official coefficients.
+We find the $\lambda$ for the best model. Then, we use the test set to compute the test Mean Square Error. Finally we refit the model on the full data set using the best lambda and get official coefficients.
 
 PCR and PLSR follow a similar process As before, we check the mission value in the data for both train and test sets and use random seeds for cross-validation. We then conduct 10-fold cross-validation on the test set to find out the best number of principal components used. 
 
@@ -71,7 +71,7 @@ Above is the plot of the cross-validation errors for each regression.
 Next, we looked determinants of income post-graduation. The following is a table showing the OLS regression coefficients for our benchmark.
 
 <<xtable, results=tex, echo=FALSE>>=
-xtable_summary <- xtable(ols_income_summary, 
+xtable_summary <- xtable(ols_coef_i, 
                          caption = 'Summary Table of OLS Regression for Income')
 print(xtable_summary, comment=FALSE, type = "latex", max.levels=0, caption.placement = 'top')
 @
