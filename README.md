@@ -5,11 +5,19 @@ In this project, we assess the performance of publicly funded schools to determi
 
 
 ## Project Structure
+
+The main directories of this repository are:
+* `data`, which stores the clean College Scorecard data set `clean_2012.rds`, and the RData and text outputs from our analysis
+* `code`, which contains code from R for analysis/computations and contains three directories: 
+   * functions, which contains a mean-squared error function
+   * scripts, which all code for data processing and model analysis
+   * tests, which holds unit tests for the function
+* `images`, which stores the graphic output including correlation matrix and scatterplots
+* `report`, which is sectioned into its separate parts, which is combined into the official project report
+* `slides`, which represents the findings in the report in a formal presentation
+* `shinyapp`, which contains an interactive app to visualize the data and results
+
 Not in seperate folders are the .gitignore, the Makefile, the README.md, LICENSE, and session-info.txt.
-In subfolders, there exists a data folder (where the original dataset and the R analysis is),
-a code folder (where the code for the analysis is),
-an images folder (where pdfs and pngs of all the histogram and scatterplots are)
-and a report folder (where the report was typed up and the all the information collected together).
 
 Specifically, the detailed structure of this project is as following:
 
@@ -35,15 +43,16 @@ stat159-fall2016-project3/
     images/
       README.md
         ...
-	  slides/
-	    slides.html
-	    slides.Rmd
     report/
       report.Rnw
       report.pdf
       sections/
         ...
-       
+    shinyapp/
+	  app.R
+	slides/
+	  slides.html
+	  slides.Rmd
 ```
 
 
