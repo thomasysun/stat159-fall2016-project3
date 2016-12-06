@@ -144,7 +144,7 @@ p9 + geom_point() +
         axis.ticks.x = element_blank(),
         axis.text.x = element_blank()) +
   labs(x = "% First Gen",
-       y = "Earnings Agg",
+       y = "Completion",
        title = "% First Gen vs Completion")
 dev.off()
 
@@ -157,7 +157,7 @@ p10 + geom_point() +
         axis.ticks.x = element_blank(),
         axis.text.x = element_blank()) +
   labs(x = "Low Income",
-       y = "Earnings Agg",
+       y = "Completion",
        title = "Low Income vs Completion")
 dev.off()
 
