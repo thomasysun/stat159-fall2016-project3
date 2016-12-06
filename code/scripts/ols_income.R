@@ -2,10 +2,9 @@
 library("glmnet")
 library('pls')
 #load mse function
-source("code/functions/function_mse.R")
+source("../../code/functions/function_mse.R")
 #pre-modeling data processing
-clean_2012 = readRDS("data/clean_2012.rds")
-clean_2012_public = readRDS("data/clean_2012_public.rds")
+clean_2012 = readRDS("../../data/clean_2012.rds")
 
 #delete na values
 clean_2012 = na.omit(clean_2012)
@@ -29,10 +28,10 @@ rownames(ols_coef_i) = sub("^predictors", "", rownames(ols_coef_i))
 
 # Save results in binary file
 save(ols_income, ols_income_summary, ols_coef_i,
-     file = "data/ols_results_income.RData")
+     file = "../../data/ols_results_income.RData")
 
 # Save results to a text file
-sink("data/ols_results_income.txt")
+sink("../../data/ols_results_income.txt")
 cat("Threshold income results of multiple linear regression model via Ordinary Least Square", "\n")
 ols_income_summary
 sink()

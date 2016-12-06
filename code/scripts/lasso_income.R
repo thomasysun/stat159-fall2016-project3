@@ -2,10 +2,10 @@
 library("glmnet")
 library('pls')
 #load mse function
-source("code/functions/function_mse.R")
+source("../../code/functions/function_mse.R")
 #pre-modeling data processing
-clean_2012 = readRDS("data/clean_2012.rds")
-clean_2012_public = readRDS("data/clean_2012_public.rds")
+clean_2012 = readRDS("../../data/clean_2012.rds")
+
 
 #delete na values
 clean_2012 = na.omit(clean_2012)
@@ -40,8 +40,8 @@ save(lasso_train_i,
      lasso_bestlam_i,
      lasso_test_MSE_i,
      lasso_coef_i,
-     file = "./data/lasso_results_income.Rdata")
-sink(file ="./data/lasso_results_income.txt")
+     file = "../../data/lasso_results_income.Rdata")
+sink(file ="../../data/lasso_results_income.txt")
 cat("Lasso Model")
 cat("\n")
 lasso_train_i

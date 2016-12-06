@@ -2,10 +2,9 @@
 library("glmnet")
 library('pls')
 #load mse function
-source("code/functions/function_mse.R")
+source("../../code/functions/function_mse.R")
 #pre-modeling data processing
-clean_2012 = readRDS("data/clean_2012.rds")
-clean_2012_public = readRDS("data/clean_2012_public.rds")
+clean_2012 = readRDS("../../data/clean_2012.rds")
 
 #delete na values
 clean_2012 = na.omit(clean_2012)
@@ -30,10 +29,10 @@ rownames(ols_coef_i) = sub("^predictors", "", rownames(ols_coef_i))
 
 # Save results in binary file
 save(ols_income, ols_income_summary, ols_coef_i,
-     file = "data/ols_results_income.RData")
+     file = "../../data/ols_results_income.RData")
 
 # Save results to a text file
-sink("data/ols_results_income.txt")
+sink("../../data/ols_results_income.txt")
 cat("Threshold income results of multiple linear regression model via Ordinary Least Square", "\n")
 ols_income_summary
 sink()
@@ -60,8 +59,8 @@ save(ridge_train_i,
      ridge_bestlam_i,
      ridge_test_MSE_i,
      ridge_coef_i,
-     file = "./data/ridge_results_income.Rdata")
-sink(file ="./data/ridge_results_income.txt")
+     file = "../../data/ridge_results_income.Rdata")
+sink(file ="../../data/ridge_results_income.txt")
 cat("Ridge Model")
 cat("\n")
 ridge_train_i
@@ -98,8 +97,8 @@ save(lasso_train_i,
      lasso_bestlam_i,
      lasso_test_MSE_i,
      lasso_coef_i,
-     file = "./data/lasso_results_income.Rdata")
-sink(file ="./data/lasso_results_income.txt")
+     file = "../../data/lasso_results_income.Rdata")
+sink(file ="../../data/lasso_results_income.txt")
 cat("Lasso Model")
 cat("\n")
 lasso_train_i
@@ -134,8 +133,8 @@ save(pcr_fit_i,
      pcr_bestpara_i,
      pcr_test_MSE_i,
      pcr_coef_i,
-     file = "./data/pcr_results_income.Rdata")
-sink(file ="./data/pcr_results_income.txt")
+     file = "../../data/pcr_results_income.Rdata")
+sink(file ="../../data/pcr_results_income.txt")
 cat("PCR Model")
 cat("\n")
 pcr_fit_i
@@ -169,8 +168,8 @@ save(pls_fit_i,
      pls_bestpara_i,
      pls_test_MSE_i,
      pls_coef_i,
-     file = "./data/pls_results_income.Rdata")
-sink(file ="./data/pls_results_income.txt")
+     file = "../../data/pls_results_income.Rdata")
+sink(file ="../../data/pls_results_income.txt")
 cat("PLS Model")
 cat("\n")
 pls_fit_i

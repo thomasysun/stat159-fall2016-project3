@@ -2,10 +2,9 @@
 library("glmnet")
 library('pls')
 #load mse function
-source("code/functions/function_mse.R")
+source("../../code/functions/function_mse.R")
 #pre-modeling data processing
-clean_2012 = readRDS("data/clean_2012.rds")
-clean_2012_public = readRDS("data/clean_2012_public.rds")
+clean_2012 = readRDS("../../data/clean_2012.rds")
 
 #delete na values
 clean_2012 = na.omit(clean_2012)
@@ -30,10 +29,10 @@ rownames(ols_coef_c) = sub("^predictors", "", rownames(ols_coef_c))
 
 # Save results in binary file
 save(ols_completion, ols_completion_summary, ols_coef_c,
-     file = "data/ols_results_completion.RData")
+     file = "../..data/ols_results_completion.RData")
 
 # Save results to a text file
-sink("data/ols_results_completion.txt")
+sink("../../data/ols_results_completion.txt")
 cat("4-year completion results of multiple linear regression model via Ordinary Least Square", "\n")
 ols_completion_summary
 sink()
@@ -60,8 +59,8 @@ save(ridge_train_c,
      ridge_bestlam_c,
      ridge_test_MSE_c,
      ridge_coef_c,
-     file = "./data/ridge_results_completion.Rdata")
-sink(file ="./data/ridge_results_completion.txt")
+     file = "../../data/ridge_results_completion.Rdata")
+sink(file ="../../data/ridge_results_completion.txt")
 cat("Ridge Model")
 cat("\n")
 ridge_train_c
@@ -96,8 +95,8 @@ save(lasso_train_c,
      lasso_bestlam_c,
      lasso_test_MSE_c,
      lasso_coef_c,
-     file = "./data/lasso_results_completion.Rdata")
-sink(file ="./data/lasso_results_completion.txt")
+     file = "../../data/lasso_results_completion.Rdata")
+sink(file ="../../data/lasso_results_completion.txt")
 cat("Lasso Model")
 cat("\n")
 lasso_train_c
@@ -131,8 +130,8 @@ save(pcr_fit_c,
      pcr_bestpara_c,
      pcr_test_MSE_c,
      pcr_coef_c,
-     file = "./data/pcr_results_completion.Rdata")
-sink(file ="./data/pcr_results_completion.txt")
+     file = "../../data/pcr_results_completion.Rdata")
+sink(file ="../../data/pcr_results_completion.txt")
 cat("PCR Model")
 cat("\n")
 pcr_fit_c
@@ -167,8 +166,8 @@ save(pls_fit_c,
      pls_bestpara_c,
      pls_test_MSE_c,
      pls_coef_c,
-     file = "./data/pls_results_completion.Rdata")
-sink(file ="./data/pls_results_completion.txt")
+     file = "../../data/pls_results_completion.Rdata")
+sink(file ="../../data/pls_results_completion.txt")
 cat("PLS Model")
 cat("\n")
 pls_fit_c

@@ -2,10 +2,10 @@
 library("glmnet")
 library('pls')
 #load mse function
-source("code/functions/function_mse.R")
+source("../../code/functions/function_mse.R")
 #pre-modeling data processing
-clean_2012 = readRDS("data/clean_2012.rds")
-clean_2012_public = readRDS("data/clean_2012_public.rds")
+clean_2012 = readRDS("../../data/clean_2012.rds")
+
 
 #delete na values
 clean_2012 = na.omit(clean_2012)
@@ -38,8 +38,8 @@ save(pls_fit_i,
      pls_bestpara_i,
      pls_test_MSE_i,
      pls_coef_i,
-     file = "./data/pls_results_income.Rdata")
-sink(file ="./data/pls_results_income.txt")
+     file = "../../data/pls_results_income.Rdata")
+sink(file ="../../data/pls_results_income.txt")
 cat("PLS Model")
 cat("\n")
 pls_fit_i

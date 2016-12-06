@@ -2,10 +2,10 @@
 library("glmnet")
 library('pls')
 #load mse function
-source("code/functions/function_mse.R")
+source("../../code/functions/function_mse.R")
 #pre-modeling data processing
-clean_2012 = readRDS("data/clean_2012.rds")
-clean_2012_public = readRDS("data/clean_2012_public.rds")
+clean_2012 = readRDS("../../data/clean_2012.rds")
+
 
 #delete na values
 clean_2012 = na.omit(clean_2012)
@@ -43,8 +43,8 @@ save(ridge_train_c,
      ridge_bestlam_c,
      ridge_test_MSE_c,
      ridge_coef_c,
-     file = "./data/ridge_results_completion.Rdata")
-sink(file ="./data/ridge_results_completion.txt")
+     file = "../../data/ridge_results_completion.Rdata")
+sink(file ="../../data/ridge_results_completion.txt")
 cat("Ridge Model")
 cat("\n")
 ridge_train_c

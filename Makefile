@@ -3,13 +3,12 @@
 clean_data = data/clean_2012.rds
 eda = exploratory_data_analysis.R
 mse = code/functions/function_mse.R
-clean_data = data/train-and-test-set.RData
 completion = regression_completion.R
 income = regression_income.R
-sections = report/sections/*.Rmd
+sections = report/sections/*.Rnw
 
 #declare phony targets
-.PHONY: all tests eda completion income regressions report slides session clean
+.PHONY: all tests eda completion income regressions report slides shinyapp session clean
 
 # ------------------------------------------------------------------------------------------
 # default targets
@@ -58,7 +57,7 @@ regressions:
 # ------------------------------------------------------------------------------------------
 report: $(sections) $(clean_data) $(mse)
 	cd report && R CMD Sweave report.Rnw
-	Rscript -e "library(knitr); knit2pdf('report.tex')"
+	cd report && Rscript -e "library(knitr); knit2pdf('report.tex')"
 
 
 # ------------------------------------------------------------------------------------------
@@ -70,7 +69,7 @@ slides: $(clean_data) $(mse)
 # ------------------------------------------------------------------------------------------
 # Deploy shinyapp
 # ------------------------------------------------------------------------------------------
-slides: $(clean_data)
+shinyapp: $(clean_data)
 	Rscript -e "shiny::runApp('shinyapp')"
 
 
