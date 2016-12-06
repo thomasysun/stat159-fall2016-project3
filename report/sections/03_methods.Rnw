@@ -1,7 +1,4 @@
-\documentclass{article}
-
-\begin{document}
-\SweaveOpts{concordance=TRUE}
+% !Rnw root = ../report.Rnw
 
 \section*{Methods}
 
@@ -65,5 +62,3 @@ Lastly, partial least squares, also a dimension reduction method, tries to find 
 
 Once all of the best models are identified, the test set will be used to compute the MSEs of each, and find which model performs best. The best model will finally be used on the full dataset to find official coefficients. The entire process is done twice, once for each outcome of interest.
 
-
-\end{document}

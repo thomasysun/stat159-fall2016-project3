@@ -1,8 +1,4 @@
-\documentclass{article}
-
-\begin{document}
-\SweaveOpts{concordance=TRUE}
-
+% !Rnw root = ../report.Rnw
 
 \section*{Analysis}
 
@@ -16,42 +12,43 @@ library(Matrix)
 library(methods)
 
 # load data in our working environment 
-load('../../data/ols_results_completion.RData')
-load('../../data/ridge_results_completion.RData')
-load('../../data/lasso_results_completion.RData')
-load('../../data/pcr_results_completion.RData')
-load('../../data/pls_results_completion.RData')
-load('../../data/ols_results_income.RData')
-load('../../data/ridge_results_income.RData')
-load('../../data/lasso_results_income.RData')
-load('../../data/pcr_results_income.RData')
-load('../../data/pls_results_income.RData')
+load('../data/ols_results_completion.RData')
+load('../data/ridge_results_completion.RData')
+load('../data/lasso_results_completion.RData')
+load('../data/pcr_results_completion.RData')
+load('../data/pls_results_completion.RData')
+load('../data/ols_results_income.RData')
+load('../data/ridge_results_income.RData')
+load('../data/lasso_results_income.RData')
+load('../data/pcr_results_income.RData')
+load('../data/pls_results_income.RData')
 
 
 # load our functions
-source("../../code/functions/function_mse.R")
+source("../code/functions/function_mse.R")
 @
 
 \subsection*{Ordinary Least Squares}
 First, let's look at our benchmark - OLS regression. We use full set of data that is mean centering and standardizing to fit the OLS model. OLS model will be served as our benchmark for comparison with later four different methods.
 
-Here is more information about OLS regression for four year completion rates:
+Here is more information about OLS regression for four year completion rates and post-graduate income:
+
+\vspace{100mm}
 <<xtable, results=tex, echo=FALSE>>=
-xtable_summary <- xtable(ols_coef_c, 
+xtable_summary <- xtable(ols_coef_c[2:nrow(ols_coef_c),], 
                          caption = 'Summary Table of OLS Regression for Completion Rates')
 print(xtable_summary, comment=FALSE, type = "latex", max.levels=0, caption.placement = 'top')
 @
 
 
-From the above information, we can conclude that the coefficient for predictors such as family income, federal loans, and SAT score are extremely significant. Meanwhile, proportion of Black and Hispanic population is not significant. Next, we looked determinants of income post-graduation. The following is a table showing the OLS regression coefficients for our benchmark.
-
-\vspace{100mm}
 
 <<xtable, results=tex, echo=FALSE>>=
-xtable_summary <- xtable(ols_coef_i, 
-                         caption = 'Summary Table of OLS Regression for Income 10 Years After Graduation')
+xtable_summary <- xtable(ols_coef_i[2:nrow(ols_coef_i),], 
+                         caption = 'Summary Table of OLS Regression for Post-Graduate Income')
 print(xtable_summary, comment=FALSE, type = "latex", max.levels=0, caption.placement = 'top')
 @
+
+From the above information, we can conclude that the coefficient for predictors such as family income, federal loans, and SAT score are extremely significant. Meanwhile, proportion of Black and Hispanic population is not significant. This is true for both determinants of completion and income.
 
 Here we find that the statistically significant predictors are similar to those of the completion rate regression. Again, Black and Hispanic populations are shown to have no significant effect on income. 
 
@@ -65,5 +62,3 @@ PCR and PLSR follow a similar process As before, we check the mission value in t
 
 Once finding the number of principal components considered for the best model, we use the test set to compute the test Mean Square Error and finally refit the model on the full data set using the best number of components and get official coefficients. The next section shows the results from these methods.
 
-\vspace{80mm}
-\end{document}

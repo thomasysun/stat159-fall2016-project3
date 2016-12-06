@@ -1,19 +1,18 @@
-\documentclass{article}
+% !Rnw root = ../report.Rnw
 
-\begin{document}
-\SweaveOpts{concordance=TRUE}
-
-\section{Conclusions}
+\section*{Conclusions}
 
 From the College Scorecard data, we wanted to learn what characteristics of an institution determine its value and performance in order to determine how to allocate grant money to the most effective institutions. Our exploratory data analysis showed that
 
 We fitted an OLS model upon the dataset so that we could get more insight about the information hidden behind the data. And the summary statistics served as our benchmark. Then, after some pre-model data processing, we looked to pick the best model from two shrinkage methods (ridge and lasso) and two dimension reduction methods (PCR and PLSR). The test mean squared error from all 4 different methods were competitive with each other. Lasso regression method achieved the lowest test MSE and is thus considered the "best model" among the four methods. 
 
-Using the estimated coefficients from lasso regression, we find that strong predictors of credit balance include income, credit rating, credit limit, and student status. Meanwhile, number of cards, age, education, gender, marital status, and ethnicity are relatively weak predictors. Compared to the OLS coefficients, ridge regression appears to emphasize the effect of credit rating on balance more while emphasizing the effect of credit limit less. 
+Using the estimated coefficients from lasso regression, we find that strong negatively associated predictors of completion rates include include coming from a lower income family, first generation status, and federal loans. Meanwhile, black population, school size, cost of attendance and average SAT score are positively related with completion. For post-graduate income, strong negative predictors are white population, low income status, and federal loans. Suprisingly, black and hispanic populations are not relevant in both regressions. 
 
-Despite having a slightly higher MSE, lasso regression has the advantage of being the easiest of the models to interpret. It sets education, gender, marital status, and ethnicity coefficient to exactly zero, which is useful because it reduces the number of predictors to consider.
+Our findings suggest that it is income, not race, that influence the completion rates and post-graduate income of students. Therefore we recommend that these grants should be given out based on income. in particular, low to middle class families and first generation students who may have to rely on federal loans otherwise. Giving grants loans to these students may encourage them to complete their degree and not become financially burdened by high debt. Institutions with high percentages of these kinds of students should be assessed in particular.
 
-The low MSE implies that our results may be useful for predictive purposes. The results suggest that increasing credit limit and rating will increase balance, while increasing income will lower credit balance. And, if the individual is a student, their balance is estimated to be lower.
+\section*{References}
 
-
-\end{document}
+College Scorecard Data https://collegescorecard.ed.gov/data/ \newline
+\noindent
+\\
+James, Gareth, Daniela Witten, Trevor Hastie, and Robert Tibshirani. An Introduction to Statistical Learning: With Applications in R. New York: Springer, 2013. Print.

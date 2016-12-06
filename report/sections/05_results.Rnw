@@ -1,8 +1,4 @@
-\documentclass{article}
-
-\begin{document}
-\SweaveOpts{concordance=TRUE}
-
+% !Rnw root = ../report.Rnw
 
 \section*{Results}
 
@@ -20,47 +16,48 @@ library(ggplot2)
 library(reshape2)
 
 # load data in our working environment 
-load('../../data/ols_results_completion.RData')
-load('../../data/ridge_results_completion.RData')
-load('../../data/lasso_results_completion.RData')
-load('../../data/pcr_results_completion.RData')
-load('../../data/pls_results_completion.RData')
-load('../../data/ols_results_income.RData')
-load('../../data/ridge_results_income.RData')
-load('../../data/lasso_results_income.RData')
-load('../../data/pcr_results_income.RData')
-load('../../data/pls_results_income.RData')
+load('../data/ols_results_completion.RData')
+load('../data/ridge_results_completion.RData')
+load('../data/lasso_results_completion.RData')
+load('../data/pcr_results_completion.RData')
+load('../data/pls_results_completion.RData')
+load('../data/ols_results_income.RData')
+load('../data/ridge_results_income.RData')
+load('../data/lasso_results_income.RData')
+load('../data/pcr_results_income.RData')
+load('../data/pls_results_income.RData')
 
 
 # load our functions
-source("../../code/functions/function_mse.R")
+source("../code/functions/function_mse.R")
 @
 
-From our exploratory analysis we find several interesting relationships between completion rates and several predictors. Below are some scatterplots exhibiting these relationships. From the below figures we see that first generation status is negatively correlated with completion, cost of attendance is positively, and percentage of student body as black seems to have no correlation.
+From our exploratory analysis we find several interesting relationships between completion rates and several predictors. Below are some scatterplots exhibiting these relationships. From the below figures we see that first generation status is negatively correlated with completion, cost of attendance is positively correlated, and percentage of student body as black seems to have no correlation.
 
 \begin{figure}[!hb]
   \centering
-    \includegraphics[width=55mm]{../../images/firstgen_completion.png}
+    \includegraphics[width=55mm]{../images/firstgen_completion.png}
       \caption{Plot of Completion Rates against First Generation Status}
-\end{figure}
-
-
-\begin{figure}[!hb]
-  \centering
-    \includegraphics[width=55mm]{../../images/costattend_completion.png}
-      \caption{Plot of Completion Rates against Cost of Attendance}
 \end{figure}
 
 \vspace{40mm}
 
 \begin{figure}[!hb]
   \centering
-    \includegraphics[width=55mm]{../../images/black_completion_all.png}
+    \includegraphics[width=65mm]{../images/costattend_completion.png}
+      \caption{Plot of Completion Rates against Cost of Attendance}
+\end{figure}
+
+\begin{figure}[!hb]
+  \centering
+    \includegraphics[width=65mm]{../images/black_completion_all.png}
       \caption{Plot of Completion Rates against Percentage of Black Population}
 \end{figure}
 
 
 Now let's look at our predictive models. We obtain the test mean squared errors for every predictive model from our analysis. Below is the table of MSEs for each model.
+
+\vspace{40mm}
 
 <<coefficients, results=tex, echo=FALSE>>=
 # Create test mse dataframe
@@ -75,9 +72,9 @@ xtable_mse <- xtable(table_mse, caption = 'Test MSE for All Methods',
 print(xtable_mse, comment=FALSE, type = "latex", caption.placement = 'top')
 @
 
-Table 1 has only one row (Test MSE value) and four columns (one column per regression methods: ridge, lasso, pcr, and plsr).
+Table 3 has only one row (Test MSE value) and four columns (one column per regression methods: ridge, lasso, pcr, and plsr).
 
-From Table 1, the result shows that the model with lowest test Mean Square Error is Lasso Regression, which means that lasso regression actually has the best performance when we test the prediction against the true value in testing set. Thus we use the results from lasso regression as our best model and official coefficients for the regression.
+From Table 3, the result shows that the model with lowest test Mean Square Error is Lasso Regression, which means that lasso regression actually has the best performance when we test the prediction against the true value in testing set. Thus we use the results from lasso regression as our best model and official coefficients for the regression.
 
 
 <<coefficients, results=tex, echo=FALSE>>=
@@ -107,7 +104,7 @@ print(xtable_coef, comment=FALSE, type = "latex", caption.placement = 'top')
 @
 
 
-From Table 2, the results show that regression coefficients for Ridge, Lasso, PCR, and PLSR are approximately closed to each other's value but are slightly different compared to OLS - our benchmark. 
+From Table 4, the results show that regression coefficients for Ridge, Lasso, PCR, and PLSR are approximately closed to each other's value but are slightly different compared to OLS - our benchmark. 
 
 Not surprisingly, we have seen that some coefficients in lasso regression are zero because lasso regression allows coefficients to be zero to minimize the regression penalty.
 
@@ -115,28 +112,31 @@ From our results we see that coming from a low income bracket family, having fed
 
 \subsection*{Income}
 
-From our exploratory analysis we also find some interesting relationships between income and several predictors. Below are some scatterplots exhibiting these relationships. From the below figures we see that, like with completion rates, first generation status is negatively correlated with completion, cost of attendance is positively, and percentage of student body as black seems to have no correlation.
+From our exploratory analysis we also find some interesting relationships between income and several predictors. Below are some scatterplots exhibiting these relationships. From the below figures we see that, like with completion rates, first generation status is negatively correlated with income 10 years after graduation, while cost of attendance is positively correlated. Also, percentage of student body as black seems to have no correlation with post-graduate income.
 
+\vspace{10mm}
 
 \begin{figure}[!hb]
   \centering
-    \includegraphics[width=42mm]{../../images/firstgen_earnings.png}
+    \includegraphics[width=80mm]{../images/firstgen_earnings.png}
       \caption{Plot of Earnings against First Generation Status}
 \end{figure}
-\vspace{40mm}
+
+\vspace{105mm}
 
 \begin{figure}[!hb]
   \centering
-    \includegraphics[width=55mm]{../../images/costattend_earnings.png}
+    \includegraphics[width=80mm]{../images/costattend_earnings.png}
       \caption{Plot of Earnings against Cost of Attendance}
 \end{figure}
 
 \begin{figure}[!hb]
   \centering
-    \includegraphics[width=65mm]{../../images/black_earnings_all.png}
+    \includegraphics[width=80mm]{../images/black_earnings_all.png}
       \caption{Plot of Earnings against Percentage of Black Population}
 \end{figure}
 
+\vspace{20mm}
 
 Now, we look the MSE of each model, this time with post-graduate income as our regressor.
 
@@ -153,9 +153,9 @@ xtable_mse <- xtable(table_mse, caption = 'Test MSE for All Methods',
 print(xtable_mse, comment=FALSE, type = "latex", caption.placement = 'top')
 @
 
-Table 3 is similar to Table 1, except the MSEs are overall larger than with completion rates as our outcome, meaning that the regression line fits the data somewhat better for completion rates.
+Table 5 is similar to Table 1, except the MSEs are overall larger than with completion rates as our outcome, meaning that the regression line fits the data somewhat better for completion rates.
 
-From Table 3, the results shows that the model with lowest test Mean Square Error is also Lasso Regression. Thus we use the results from lasso regression as our best model and official coefficients as well.
+From Table 5, the results shows that the model with lowest test Mean Square Error is also Lasso Regression. Thus we use the results from lasso regression as our best model and official coefficients as well.
 
 
 <<coefficients, results=tex, echo=FALSE>>=
@@ -183,11 +183,7 @@ xtable_coef <- xtable(table_coef, caption = 'Regression Coefficients for All Met
 print(xtable_coef, comment=FALSE, type = "latex", caption.placement = 'top')
 @
 
-Table 4 shows that the regression results are approximately similar for all models. Lasso regression sets some coefficients to exactly zero as expected.
 
 From these results we learn that coming from a low income bracket and having federal loans are negatively associated with post-graduate income. Black and Hispanic population do not affect income, rather increased percentage of Whites has a negative effect while increased percentage of Asians has a positive effect. From this we learn that underrepresented races in universities do not affect post-graduate income after controlling for other variables. First generation status, cost of attendance, and SAT scores have a positive relationship with income. The last two may be expected for the same reason as the positive effect on completion rate, but the coefficient for first generation status may be suprising.
 
 
-
-
-\end{document}
