@@ -1,0 +1,26 @@
+\documentclass{article}
+\title{College Scorecard Report}
+
+\author{Ziao Lu, Lydia Maher, and Thomas Sun}
+
+\date{December 1, 2016}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+\maketitle
+
+\SweaveInput{sections/00_abstract.Rnw}
+
+\SweaveInput{sections/01_introduction.Rnw}
+
+\SweaveInput{sections/02_data.Rnw}
+
+\SweaveInput{sections/03_methods.Rnw}
+
+\SweaveInput{sections/04_analysis.Rnw}
+
+\SweaveInput{sections/05_results.Rnw}
+
+\SweaveInput{sections/06_conclusions.Rnw}
+
+\end{document}
