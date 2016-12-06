@@ -1,0 +1,88 @@
+Session Info
+
+Make Version
+------------
+GNU Make 3.81
+Copyright (C) 2006  Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.
+There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE.
+
+This program built for i386-pc-mingw32
+
+
+Git Version
+-----------
+git version 1.9.4.msysgit.1
+
+
+pandoc Version
+--------------
+pandoc.exe 1.17.2
+Compiled with texmath 0.8.6.4, highlighting-kate 0.6.2.
+Syntax highlighting is supported for the following languages:
+    abc, actionscript, ada, agda, apache, asn1, asp, awk, bash, bibtex, boo, c,
+    changelog, clojure, cmake, coffee, coldfusion, commonlisp, cpp, cs, css,
+    curry, d, diff, djangotemplate, dockerfile, dot, doxygen, doxygenlua, dtd,
+    eiffel, elixir, email, erlang, fasm, fortran, fsharp, gcc, glsl,
+    gnuassembler, go, hamlet, haskell, haxe, html, idris, ini, isocpp, java,
+    javadoc, javascript, json, jsp, julia, kotlin, latex, lex, lilypond,
+    literatecurry, literatehaskell, llvm, lua, m4, makefile, mandoc, markdown,
+    mathematica, matlab, maxima, mediawiki, metafont, mips, modelines, modula2,
+    modula3, monobasic, nasm, noweb, objectivec, objectivecpp, ocaml, octave,
+    opencl, pascal, perl, php, pike, postscript, prolog, pure, python, r,
+    relaxng, relaxngcompact, rest, rhtml, roff, ruby, rust, scala, scheme, sci,
+    sed, sgml, sql, sqlmysql, sqlpostgresql, tcl, tcsh, texinfo, verilog, vhdl,
+    xml, xorg, xslt, xul, yacc, yaml, zsh
+Default user data directory: C:\Users\Thomas\AppData\Roaming\pandoc
+Copyright (C) 2006-2016 John MacFarlane
+Web:  http://pandoc.org
+This is free software; see the source for copying conditions.
+There is no warranty, not even for merchantability or fitness
+for a particular purpose.
+
+
+R Version
+---------
+Session Information
+
+R version 3.1.1 (2014-07-10)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+locale:
+[1] LC_COLLATE=English_United States.1252  LC_CTYPE=English_United States.1252   
+[3] LC_MONETARY=English_United States.1252 LC_NUMERIC=C                          
+[5] LC_TIME=English_United States.1252    
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] ggplot2_2.1.0 shiny_0.13.2  png_0.1-7     Matrix_1.2-6 
+
+loaded via a namespace (and not attached):
+ [1] colorspace_1.2-6 digest_0.6.9     DT_0.1           grid_3.1.1       gtable_0.2.0     htmltools_0.3.5 
+ [7] htmlwidgets_0.6  httpuv_1.3.3     lattice_0.20-29  magrittr_1.5     mime_0.4         munsell_0.4.3   
+[13] plyr_1.8.3       R6_2.1.2         Rcpp_0.12.3      scales_0.4.0     tools_3.1.1      xtable_1.8-2    
+[19] yaml_2.1.13     
+Session Information
+
+R version 3.1.1 (2014-07-10)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+locale:
+[1] LC_COLLATE=English_United States.1252  LC_CTYPE=English_United States.1252   
+[3] LC_MONETARY=English_United States.1252 LC_NUMERIC=C                          
+[5] LC_TIME=English_United States.1252    
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] xtable_1.8-2    rmarkdown_0.9.6 knitr_1.12.3    ggplot2_2.1.0   shiny_0.13.2    png_0.1-7      
+[7] Matrix_1.2-6   
+
+loaded via a namespace (and not attached):
+ [1] colorspace_1.2-6 digest_0.6.9     DT_0.1           grid_3.1.1       gtable_0.2.0     htmltools_0.3.5 
+ [7] htmlwidgets_0.6  httpuv_1.3.3     lattice_0.20-29  magrittr_1.5     mime_0.4         munsell_0.4.3   
+[13] plyr_1.8.3       R6_2.1.2         Rcpp_0.12.3      scales_0.4.0     tools_3.1.1      yaml_2.1.13     

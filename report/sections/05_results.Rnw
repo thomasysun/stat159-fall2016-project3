@@ -8,12 +8,9 @@
 # load data and library
 options(warn = -1)
 library(xtable)
-library(png)
 library(grid)
 library(Matrix)
 library(methods)
-library(ggplot2)
-library(reshape2)
 
 # load data in our working environment 
 load('../data/ols_results_completion.RData')

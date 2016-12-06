@@ -6,7 +6,6 @@
 # load data and library
 options(warn = -1)
 library(xtable)
-library(png)
 library(grid)
 library(Matrix)
 library(methods)
